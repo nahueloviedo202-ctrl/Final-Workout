@@ -153,21 +153,36 @@
                   },
                   "blocks": {}
                 },
+                "rating_stars_qURQft": {
+                  "type": "rating-stars",
+                  "name": "Rating stars",
+                  "settings": {
+                    "rating": 4.8,
+                    "review_count": "1300",
+                    "icon_size": 16,
+                    "star_color": "#ffcc00",
+                    "star_background_color": "#ececec",
+                    "alignment": "flex-start",
+                    "show_count": true,
+                    "count_format": "(+1300 Reviews)"
+                  },
+                  "blocks": {}
+                },
                 "price_tVjtKg": {
                   "type": "price",
                   "settings": {
                     "show_sale_price_first": true,
                     "show_installments": false,
                     "show_tax_info": false,
-                    "type_preset": "paragraph",
+                    "type_preset": "custom",
                     "width": "100%",
                     "alignment": "left",
                     "font": "var(--font-body--family)",
-                    "font_size": "1rem",
+                    "font_size": "1.5rem",
                     "line_height": "normal",
                     "letter_spacing": "normal",
                     "case": "none",
-                    "text_color": "",
+                    "text_color": "#C9A84C",
                     "padding-block-start": 4,
                     "padding-block-end": 0,
                     "padding-inline-start": 0,
@@ -178,6 +193,7 @@
               },
               "block_order": [
                 "text_xrnftG",
+                "rating_stars_qURQft",
                 "price_tVjtKg"
               ]
             },
