@@ -24,6 +24,9 @@
   endif
 
   assign scale_max = scale_max | default: 5
+
+  assign count_placeholder = '{{' | append: ' count ' | append: '}}'
+  assign count_text = block_settings.count_format | replace: count_placeholder, rating_count
 %}
 
 {% if rating != blank %}
@@ -60,7 +63,7 @@
 
     {% if block_settings.show_count and rating_count != blank %}
       <span class="rating-stars-block__label">
-        {{- block_settings.count_format | replace: '{{ count }}', rating_count -}}
+        {{- count_text -}}
       </span>
     {% endif %}
   </div>
