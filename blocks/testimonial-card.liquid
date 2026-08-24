@@ -1,0 +1,238 @@
+{%- doc -%}
+  Renders a single testimonial card (rating stars, quote icon, heading, review text and author)
+  for use inside the `testimonials` section slideshow.
+
+  Reads shared visual settings (colors, quote icon visibility) from the parent section so every
+  card in the slider stays visually consistent, while its content (rating, copy, author) stays
+  fully editable per block.
+{%- enddoc -%}
+
+{% liquid
+  assign block_settings = block.settings
+  assign section_settings = section.settings
+
+  assign card_class = 'testimonial-card'
+  if section_settings.card_background_color != blank
+    assign card_class = card_class | append: ' color-custom-' | append: block.id
+  endif
+%}
+
+{% liquid
+  if section_settings.card_background_color != blank
+    render 'contrast-override', background_color: section_settings.card_background_color, text_color: section_settings.card_text_color, section_id: block.id
+  endif
+%}
+
+<div
+  class="{{ card_class }}"
+  ref="slides[]"
+  data-carousel-card
+  style="{% render 'border-override', settings: section_settings %}"
+  {{ block.shopify_attributes }}
+>
+  {% if block_settings.show_rating %}
+    <div
+      class="testimonial-card__stars"
+      style="--star-color: {{ section_settings.star_color | default: '#ffcc00' }}; --star-background-color: {{ section_settings.star_background_color | default: '#ececec' }};"
+      role="img"
+      aria-label="{{ block_settings.rating }} out of 5 stars"
+    >
+      {% for i in (1..5) %}
+        <svg
+          class="testimonial-card__star{% if i <= block_settings.rating %} testimonial-card__star--filled{% endif %}"
+          viewBox="0 0 20 20"
+          aria-hidden="true"
+          focusable="false"
+        >
+          {%- render 'icon', icon: 'star' -%}
+        </svg>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  {% if section_settings.show_quote_icon %}
+    <div
+      class="testimonial-card__quote-icon"
+      style="{% if section_settings.quote_icon_color != blank %}color: {{ section_settings.quote_icon_color }};{% endif %}"
+      aria-hidden="true"
+    >
+      <svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+        <path fill="currentColor" d="M119.472 66.59C53.489 66.59 0 120.094 0 186.1c0 65.983 53.489 119.487 119.472 119.487c0 0-0.578 44.392-36.642 108.284c-4.006 12.802 3.135 26.435 15.945 30.418c9.089 2.859 18.653 0.08 24.829-6.389c82.925-90.7 115.385-197.448 115.385-251.8C238.989 120.094 185.501 66.59 119.472 66.59z" />
+        <path fill="currentColor" d="M392.482 66.59c-65.983 0-119.472 53.505-119.472 119.51c0 65.983 53.489 119.487 119.472 119.487c0 0-0.578 44.392-36.642 108.284c-4.006 12.802 3.136 26.435 15.945 30.418c9.089 2.859 18.653 0.08 24.828-6.389C479.539 347.2 512 240.452 512 186.1C512 120.094 458.511 66.59 392.482 66.59z" />
+      </svg>
+    </div>
+  {% endif %}
+
+  {% if block_settings.heading != blank %}
+    <h3 class="testimonial-card__heading {{ block_settings.heading_type_preset }}">
+      {{- block_settings.heading -}}
+    </h3>
+  {% endif %}
+
+  {% if block_settings.text != blank %}
+    <div class="testimonial-card__text rte">
+      {{ block_settings.text }}
+    </div>
+  {% endif %}
+
+  {% if block_settings.author != blank %}
+    <p class="testimonial-card__author">{{ block_settings.author }}</p>
+  {% endif %}
+</div>
+
+{% stylesheet %}
+  .testimonial-card {
+    --card-padding-block: 3.2rem;
+    --card-padding-inline: 3rem;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 0 0 auto;
+    width: calc(
+      (100% - (var(--testimonial-gap, 0px) * (var(--testimonial-columns-mobile, 1) - 1))) /
+        var(--testimonial-columns-mobile, 1)
+    );
+    text-align: center;
+    padding: var(--card-padding-block) var(--card-padding-inline);
+    background-color: var(--color-background);
+    color: var(--color, var(--color-foreground));
+    border-radius: var(--border-radius, 0);
+    border-width: var(--border-width, 0);
+    border-style: var(--border-style, none);
+    border-color: var(--border-color);
+  }
+
+  @media screen and (min-width: 750px) {
+    .testimonial-card {
+      width: calc(
+        (100% - (var(--testimonial-gap, 0px) * (var(--testimonial-columns-desktop, 3) - 1))) /
+          var(--testimonial-columns-desktop, 3)
+      );
+    }
+  }
+
+  .testimonial-card__stars {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.2rem;
+    margin-block-end: 1.6rem;
+  }
+
+  .testimonial-card__star {
+    width: 1.8rem;
+    height: 1.8rem;
+    fill: var(--star-background-color, #ececec);
+  }
+
+  .testimonial-card__star--filled {
+    fill: var(--star-color, #ffcc00);
+  }
+
+  .testimonial-card__quote-icon {
+    width: 3.2rem;
+    height: 3.2rem;
+    margin-block-end: 1.6rem;
+    color: rgb(var(--color-foreground-rgb) / var(--opacity-muted-text, 0.3));
+  }
+
+  .testimonial-card__quote-icon svg {
+    width: 100%;
+    height: 100%;
+    fill: currentColor;
+  }
+
+  .testimonial-card__heading {
+    margin: 0 0 1.2rem;
+  }
+
+  .testimonial-card__text {
+    margin: 0;
+  }
+
+  .testimonial-card__text :is(p) {
+    margin: 0;
+  }
+
+  .testimonial-card__author {
+    margin: 1.6rem 0 0;
+    font-weight: 600;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Testimonial card",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Rating"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rating",
+      "label": "Show star rating",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "rating",
+      "label": "Rating",
+      "min": 0,
+      "max": 5,
+      "step": 1,
+      "default": 5,
+      "visible_if": "{{ block.settings.show_rating }}"
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Amazing Recipes!"
+    },
+    {
+      "type": "select",
+      "id": "heading_type_preset",
+      "label": "Heading size",
+      "options": [
+        { "value": "h3", "label": "Large" },
+        { "value": "h4", "label": "Medium" },
+        { "value": "h5", "label": "Small" },
+        { "value": "h6", "label": "Extra small" }
+      ],
+      "default": "h4"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Review text",
+      "default": "<p>The recipes were easy to follow and the meals looked amazing. I made the pasta dish on my first try and it turned out perfect.</p>"
+    },
+    {
+      "type": "text",
+      "id": "author",
+      "label": "Author",
+      "default": "Sarah M."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Testimonial card",
+      "settings": {
+        "show_rating": true,
+        "rating": 5,
+        "heading": "Amazing Recipes!",
+        "heading_type_preset": "h4",
+        "text": "<p>The recipes were easy to follow and the meals looked amazing. I made the pasta dish on my first try and it turned out perfect.</p>",
+        "author": "Sarah M."
+      }
+    }
+  ]
+}
+{% endschema %}

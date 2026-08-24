@@ -1,0 +1,455 @@
+{%- comment -%}
+  Testimonials slider section.
+
+  Renders a heading followed by a slider of `testimonial-card` blocks (star rating, quote icon,
+  heading, review text and author). Built with the theme's native slideshow-component carousel
+  (same primitive used by the Slideshow and Collection List carousel sections) so autoplay, speed,
+  arrows, dots and responsive columns are fully editable from the Theme Editor.
+{%- endcomment -%}
+
+{% liquid
+  if section.settings.background_color != blank
+    render 'contrast-override', background_color: section.settings.background_color, section_id: section.id
+  endif
+
+  assign slide_count = section.blocks.size
+
+  assign show_arrows = true
+  if section.settings.icons_style == 'none' or slide_count <= 1
+    assign show_arrows = false
+  endif
+
+  if section.settings.section_width == 'page-width'
+    assign slideshow_gutters = 'start end'
+    assign gutter_style = '--gutter-slide-width: var(--util-page-margin-offset);'
+  else
+    assign slideshow_gutters = null
+    assign gutter_style = '--gutter-slide-width: 0px;'
+  endif
+%}
+
+{% capture controls %}
+  {% if section.settings.pagination_style != 'none' and slide_count > 1 %}
+    {%- render 'slideshow-controls',
+      style: section.settings.pagination_style,
+      autoplay: section.settings.autoplay,
+      item_count: slide_count,
+      show_arrows: false,
+      controls_on_media: false,
+      arrows_on_media: false,
+      pagination_position: 'center'
+    -%}
+  {% endif %}
+{% endcapture %}
+
+{% capture slides %}
+  {% content_for 'blocks' %}
+{% endcapture %}
+
+<div
+  class="section-background{% if section.settings.background_color != blank %} color-custom-{{ section.id }}{% endif %}"
+></div>
+<div
+  class="
+    section
+    section--{{ section.settings.section_width }}
+    testimonials
+    spacing-style
+    {% if section.settings.background_color != blank %}color-custom-{{ section.id }}{% endif %}
+  "
+  style="{% render 'spacing-style', settings: section.settings %}"
+>
+  {% if section.settings.heading != blank %}
+    <div class="testimonials__heading-wrapper" style="text-align: {{ section.settings.heading_alignment }};">
+      <h2 class="testimonials__heading {{ section.settings.heading_type_preset }}">
+        {{- section.settings.heading -}}
+      </h2>
+    </div>
+  {% endif %}
+
+  <div
+    class="testimonials__slider gap-style"
+    style="
+      --testimonial-columns-desktop: {{ section.settings.columns_desktop }};
+      --testimonial-columns-mobile: {{ section.settings.columns_mobile }};
+      {% render 'gap-style', value: section.settings.columns_gap, name: 'testimonial-gap' %}
+      {{ gutter_style }}
+    "
+  >
+    {% render 'slideshow',
+      class: 'testimonials__slideshow',
+      style: '--slideshow-gap: var(--testimonial-gap);',
+      controls: controls,
+      show_arrows: show_arrows,
+      icon_style: section.settings.icons_style,
+      icon_shape: section.settings.icons_shape,
+      auto_hide_controls: true,
+      infinite: false,
+      autoplay: section.settings.autoplay,
+      autoplay_speed: section.settings.autoplay_speed,
+      slideshow_gutters: slideshow_gutters,
+      slides: slides,
+      slide_count: slide_count
+    %}
+  </div>
+</div>
+
+{% stylesheet %}
+  .testimonials__heading-wrapper {
+    margin-block-end: 2.4rem;
+  }
+
+  .testimonials__heading {
+    margin: 0;
+  }
+
+  .testimonials__slideshow slideshow-slides {
+    align-items: stretch;
+  }
+
+  .testimonials__slideshow slideshow-arrows {
+    padding-inline: var(--padding-xs);
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Testimonials",
+  "tag": "section",
+  "class": "section-testimonials",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "blocks": [
+    {
+      "type": "testimonial-card"
+    }
+  ],
+  "settings": [
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "What Our Customers Are Saying"
+    },
+    {
+      "type": "select",
+      "id": "heading_type_preset",
+      "label": "Heading size",
+      "options": [
+        { "value": "h1", "label": "Extra large" },
+        { "value": "h2", "label": "Large" },
+        { "value": "h3", "label": "Medium" },
+        { "value": "h4", "label": "Small" }
+      ],
+      "default": "h1"
+    },
+    {
+      "type": "text_alignment",
+      "id": "heading_alignment",
+      "label": "Heading alignment",
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "Width",
+      "options": [
+        { "value": "page-width", "label": "Page" },
+        { "value": "full-width", "label": "Full width" }
+      ],
+      "default": "page-width"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "label": "Cards per row (desktop)",
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "label": "Cards per row (mobile)",
+      "options": [
+        { "value": "1", "label": "1" },
+        { "value": "2", "label": "2" }
+      ],
+      "default": "1"
+    },
+    {
+      "type": "range",
+      "id": "columns_gap",
+      "label": "Gap between cards",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "header",
+      "content": "Navigation"
+    },
+    {
+      "type": "select",
+      "id": "icons_style",
+      "label": "Arrows",
+      "options": [
+        { "value": "arrow", "label": "Arrows" },
+        { "value": "chevron", "label": "Chevrons" },
+        { "value": "arrows_large", "label": "Large arrows" },
+        { "value": "chevron_large", "label": "Large chevrons" },
+        { "value": "none", "label": "None" }
+      ],
+      "default": "arrow"
+    },
+    {
+      "type": "select",
+      "id": "icons_shape",
+      "label": "Arrow background",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "circle", "label": "Circle" },
+        { "value": "square", "label": "Square" }
+      ],
+      "default": "circle",
+      "visible_if": "{{ section.settings.icons_style != 'none' }}"
+    },
+    {
+      "type": "select",
+      "id": "pagination_style",
+      "label": "Pagination",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "dots", "label": "Dots" },
+        { "value": "counter", "label": "Counter" }
+      ],
+      "default": "dots"
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "Auto-rotate slides",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "autoplay_speed",
+      "label": "Speed",
+      "min": 3,
+      "max": 10,
+      "step": 1,
+      "unit": "s",
+      "default": 5,
+      "visible_if": "{{ section.settings.autoplay }}"
+    },
+    {
+      "type": "header",
+      "content": "Rating stars"
+    },
+    {
+      "type": "color",
+      "id": "star_color",
+      "label": "Star color",
+      "default": "#ffcc00"
+    },
+    {
+      "type": "color",
+      "id": "star_background_color",
+      "label": "Empty star color",
+      "default": "#ececec"
+    },
+    {
+      "type": "header",
+      "content": "Quote icon"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_quote_icon",
+      "label": "Show quote icon",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "quote_icon_color",
+      "label": "Quote icon color",
+      "placeholder": "#000000",
+      "visible_if": "{{ section.settings.show_quote_icon }}"
+    },
+    {
+      "type": "header",
+      "content": "Card"
+    },
+    {
+      "type": "color",
+      "id": "card_background_color",
+      "label": "Background color",
+      "default": "#f3f3f3"
+    },
+    {
+      "type": "color",
+      "id": "card_text_color",
+      "label": "Text color",
+      "placeholder": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "Corner radius",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "select",
+      "id": "border",
+      "label": "Border style",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "solid", "label": "Solid" }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "range",
+      "id": "border_width",
+      "label": "Border thickness",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "unit": "px",
+      "default": 1,
+      "visible_if": "{{ section.settings.border != 'none' }}"
+    },
+    {
+      "type": "range",
+      "id": "border_opacity",
+      "label": "Border opacity",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 100,
+      "visible_if": "{{ section.settings.border != 'none' }}"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border color",
+      "placeholder": "#000000",
+      "visible_if": "{{ section.settings.border != 'none' }}"
+    },
+    {
+      "type": "header",
+      "content": "Section background"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "placeholder": "Default"
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 36
+    }
+  ],
+  "presets": [
+    {
+      "name": "Testimonials",
+      "category": "Storytelling",
+      "settings": {
+        "heading": "What Our Customers Are Saying",
+        "heading_type_preset": "h1",
+        "heading_alignment": "center",
+        "section_width": "page-width",
+        "columns_desktop": 3,
+        "columns_mobile": "1",
+        "columns_gap": 40,
+        "icons_style": "arrow",
+        "icons_shape": "circle",
+        "pagination_style": "dots",
+        "autoplay": false,
+        "autoplay_speed": 5,
+        "star_color": "#ffcc00",
+        "star_background_color": "#ececec",
+        "show_quote_icon": true,
+        "card_background_color": "#f3f3f3",
+        "border_radius": 20,
+        "border": "none",
+        "padding-block-start": 36,
+        "padding-block-end": 36
+      },
+      "blocks": {
+        "testimonial_1": {
+          "type": "testimonial-card",
+          "settings": {
+            "show_rating": true,
+            "rating": 5,
+            "heading": "Amazing Recipes!",
+            "heading_type_preset": "h4",
+            "text": "<p>The recipes were easy to follow and the meals looked amazing. I made the pasta dish on my first try and it turned out perfect.</p>",
+            "author": "Sarah M."
+          }
+        },
+        "testimonial_2": {
+          "type": "testimonial-card",
+          "settings": {
+            "show_rating": true,
+            "rating": 5,
+            "heading": "Perfect for Busy Weeknights",
+            "heading_type_preset": "h4",
+            "text": "<p>Perfect for quick dinners during the week. Simple ingredients and great flavor. I never thought cooking at home could be this easy.</p>",
+            "author": "James R."
+          }
+        },
+        "testimonial_3": {
+          "type": "testimonial-card",
+          "settings": {
+            "show_rating": true,
+            "rating": 5,
+            "heading": "Love the Digital Format",
+            "heading_type_preset": "h4",
+            "text": "<p>I loved the digital format. I could follow everything directly from my phone while cooking. Highly recommend to anyone who wants to cook better.</p>",
+            "author": "Emily T."
+          }
+        }
+      },
+      "block_order": ["testimonial_1", "testimonial_2", "testimonial_3"]
+    }
+  ]
+}
+{% endschema %}
