@@ -2532,16 +2532,16 @@
         "section_width": "page-width",
         "border_radius": 32,
         "brand_column_heading": "The Final Workout",
-        "highlighted_column_background_color": "#C9A84C",
+        "highlighted_column_background_color": "#c9a84c",
         "highlighted_column_text_color": "#ffffff",
         "others_column_heading": "Others",
-        "regular_cell_background_color": "#FDF6EC",
+        "regular_cell_background_color": "#fdf6ec",
         "regular_cell_text_color": "{{ settings.color_palette.foreground }}",
         "check_icon_color": "#ffffff",
         "check_background_color": "#53af01",
         "cross_icon_color": "#121212",
-        "cross_background_color": "#F2E7D6",
-        "background_color": "#FDF6EC",
+        "cross_background_color": "#f2e7d6",
+        "background_color": "#fdf6ec",
         "padding-block-start": 60,
         "padding-block-end": 36
       }
@@ -2556,7 +2556,7 @@
     "hero_hwCGPz",
     "testimonials_7zeqRi",
     "section_LXUL7M",
-    "section_QiLNme",
-    "comparison_table_j4eGLQ"
+    "comparison_table_j4eGLQ",
+    "section_QiLNme"
   ]
 }
