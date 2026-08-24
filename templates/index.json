@@ -1390,9 +1390,9 @@
                 "link": "",
                 "open_in_new_tab": false,
                 "placeholder": "",
-                "padding-block-start": 10,
-                "padding-block-end": 10,
-                "padding-inline-start": 10,
+                "padding-block-start": 20,
+                "padding-block-end": 20,
+                "padding-inline-start": 20,
                 "padding-inline-end": 10
               },
               "blocks": {
@@ -1488,10 +1488,10 @@
                 "link": "",
                 "open_in_new_tab": false,
                 "placeholder": "",
-                "padding-block-start": 10,
-                "padding-block-end": 10,
-                "padding-inline-start": 10,
-                "padding-inline-end": 10
+                "padding-block-start": 20,
+                "padding-block-end": 20,
+                "padding-inline-start": 20,
+                "padding-inline-end": 20
               },
               "blocks": {
                 "text_AakYCi": {
@@ -1586,10 +1586,10 @@
                 "link": "",
                 "open_in_new_tab": false,
                 "placeholder": "",
-                "padding-block-start": 10,
-                "padding-block-end": 10,
-                "padding-inline-start": 10,
-                "padding-inline-end": 10
+                "padding-block-start": 20,
+                "padding-block-end": 20,
+                "padding-inline-start": 20,
+                "padding-inline-end": 20
               },
               "blocks": {
                 "text_gBY8fE": {
