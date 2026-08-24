@@ -1,0 +1,243 @@
+{%- comment -%}
+  Shape divider section.
+
+  Renders an animated wave shape between two optional flat spacers, used to break up the flow
+  between sections (works inside regular templates and section groups like the footer group).
+  Pure-CSS parallax wave animation (no JavaScript) — matches the "gentle wave" shape divider
+  pattern, with color, height, flip and animation speed all editable from the Theme Editor.
+{%- endcomment -%}
+
+{% liquid
+  if section.settings.background_color != blank
+    render 'contrast-override', background_color: section.settings.background_color, section_id: section.id
+  endif
+%}
+
+{% if section.settings.space_above > 0 %}
+  <div
+    class="shape-divider__spacer{% if section.settings.background_color != blank %} color-custom-{{ section.id }}{% endif %}"
+    style="height: {{ section.settings.space_above }}px;"
+  ></div>
+{% endif %}
+
+<div
+  class="shape-divider{% if section.settings.flip %} shape-divider--flip{% endif %}{% if section.settings.animate == false %} shape-divider--static{% endif %}"
+  style="
+    height: {{ section.settings.height }}px;
+    {% if section.settings.shape_color != blank %}color: {{ section.settings.shape_color }};{% endif %}
+    {% if section.settings.animate %}--shape-divider-speed: {{ section.settings.animation_speed }};{% endif %}
+  "
+>
+  <svg
+    class="shape-divider__svg"
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    viewBox="0 24 150 28"
+    preserveAspectRatio="none"
+  >
+    <defs>
+      <path
+        id="shape-divider-wave-{{ section.id }}"
+        d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"
+      />
+    </defs>
+    <g class="shape-divider__layer shape-divider__layer--1">
+      <use xlink:href="#shape-divider-wave-{{ section.id }}" x="50" y="3" fill="currentColor" />
+    </g>
+    <g class="shape-divider__layer shape-divider__layer--2">
+      <use xlink:href="#shape-divider-wave-{{ section.id }}" x="50" y="0" fill="currentColor" />
+    </g>
+    <g class="shape-divider__layer shape-divider__layer--3">
+      <use xlink:href="#shape-divider-wave-{{ section.id }}" x="50" y="9" fill="currentColor" />
+    </g>
+    <g class="shape-divider__layer shape-divider__layer--4">
+      <use xlink:href="#shape-divider-wave-{{ section.id }}" x="50" y="6" fill="currentColor" />
+    </g>
+  </svg>
+</div>
+
+{% if section.settings.space_below > 0 %}
+  <div
+    class="shape-divider__spacer{% if section.settings.background_color != blank %} color-custom-{{ section.id }}{% endif %}"
+    style="height: {{ section.settings.space_below }}px;"
+  ></div>
+{% endif %}
+
+{% stylesheet %}
+  .shape-divider__spacer {
+    width: 100%;
+    background-color: var(--color-background);
+  }
+
+  .shape-divider {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+  }
+
+  .shape-divider--flip {
+    transform: scaleY(-1);
+  }
+
+  .shape-divider__svg {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .shape-divider__layer {
+    animation: shape-divider-wave 12s linear infinite;
+    animation-duration: calc(12s / var(--shape-divider-speed, 1));
+  }
+
+  .shape-divider--static .shape-divider__layer {
+    animation: none;
+  }
+
+  .shape-divider__layer--1 {
+    opacity: 0.7;
+    animation-delay: -2s;
+    animation-duration: calc(10s / var(--shape-divider-speed, 1));
+  }
+
+  .shape-divider__layer--2 {
+    opacity: 0.5;
+    animation-delay: -3s;
+    animation-duration: calc(8s / var(--shape-divider-speed, 1));
+  }
+
+  .shape-divider__layer--3 {
+    opacity: 0.3;
+    animation-delay: -4s;
+    animation-duration: calc(6s / var(--shape-divider-speed, 1));
+  }
+
+  .shape-divider__layer--4 {
+    opacity: 1;
+    animation-delay: -5s;
+    animation-duration: calc(4s / var(--shape-divider-speed, 1));
+  }
+
+  @keyframes shape-divider-wave {
+    0% {
+      transform: translate3d(-90px, 0, 0);
+    }
+
+    100% {
+      transform: translate3d(85px, 0, 0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .shape-divider__layer {
+      animation: none;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Shape divider",
+  "tag": "div",
+  "class": "section-shape-divider",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Shape"
+    },
+    {
+      "type": "range",
+      "id": "height",
+      "label": "Height",
+      "min": 20,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "color",
+      "id": "shape_color",
+      "label": "Shape color",
+      "default": "#dd1d1d"
+    },
+    {
+      "type": "checkbox",
+      "id": "flip",
+      "label": "Flip vertically",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Animation"
+    },
+    {
+      "type": "checkbox",
+      "id": "animate",
+      "label": "Animate waves",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "animation_speed",
+      "label": "Speed",
+      "min": 0.5,
+      "max": 3,
+      "step": 0.1,
+      "default": 1,
+      "visible_if": "{{ section.settings.animate }}"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "space_above",
+      "label": "Space above",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "space_below",
+      "label": "Space below",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Background"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Spacer background color",
+      "placeholder": "Default"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Shape divider",
+      "category": "Layout",
+      "settings": {
+        "height": 80,
+        "shape_color": "#dd1d1d",
+        "flip": false,
+        "animate": true,
+        "animation_speed": 1,
+        "space_above": 0,
+        "space_below": 0
+      }
+    }
+  ]
+}
+{% endschema %}
