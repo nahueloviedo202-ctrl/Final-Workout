@@ -1,0 +1,186 @@
+{%- doc -%}
+  Renders a 5-star product rating (with partial-star fill for decimal ratings) plus an optional
+  review-count label. Reads product.metafields.reviews.rating / rating_count — the same data
+  source used by the theme's built-in "review" block — so it works with any reviews app that
+  writes to those metafields.
+
+  Uses a two-layer star technique (a full row of muted stars underneath, a colored row clipped
+  to the rating percentage on top) rather than the theme's `icon.liquid` star glyph, since this
+  block reproduces a specific external design that ships its own star artwork and color-overlay
+  method.
+{%- enddoc -%}
+
+{% liquid
+  assign block_settings = block.settings
+  assign product = closest.product
+  assign rating = product.metafields.reviews.rating.value.rating
+  assign scale_max = product.metafields.reviews.rating.value.scale_max
+  assign rating_count = product.metafields.reviews.rating_count
+
+  if request.visual_preview_mode and rating == blank
+    assign rating = 4.4
+    assign scale_max = 5
+    assign rating_count = 1300
+  endif
+
+  assign scale_max = scale_max | default: 5
+%}
+
+{% if rating != blank %}
+  <div
+    class="rating-stars-block"
+    style="
+      --rating: {{ rating }};
+      --visible-stars: {{ scale_max }};
+      --star-color: {{ block_settings.star_color | default: '#ffcc00' }};
+      --star-background-color: {{ block_settings.star_background_color | default: '#ececec' }};
+      --icon-size: {{ block_settings.icon_size }}px;
+      justify-content: {{ block_settings.alignment }};
+    "
+    role="img"
+    aria-label="{{ rating }} out of {{ scale_max }} stars"
+    {{ block.shopify_attributes }}
+  >
+    <div class="rating-stars-block__row">
+      <div class="rating-stars-block__container rating-stars-block__container--underlay">
+        {% for i in (1..scale_max) %}
+          <svg viewBox="0 0 576 512" fill="currentColor" aria-hidden="true" focusable="false">
+            <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z" />
+          </svg>
+        {% endfor %}
+      </div>
+      <div class="rating-stars-block__container rating-stars-block__container--overlay">
+        {% for i in (1..scale_max) %}
+          <svg viewBox="0 0 576 512" fill="currentColor" aria-hidden="true" focusable="false">
+            <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z" />
+          </svg>
+        {% endfor %}
+      </div>
+    </div>
+
+    {% if block_settings.show_count and rating_count != blank %}
+      <span class="rating-stars-block__label">
+        {{- block_settings.count_format | replace: '{{ count }}', rating_count -}}
+      </span>
+    {% endif %}
+  </div>
+{% endif %}
+
+{% stylesheet %}
+  .rating-stars-block {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+
+  .rating-stars-block__row {
+    position: relative;
+    display: inline-flex;
+  }
+
+  .rating-stars-block__container {
+    display: flex;
+    gap: 0.1em;
+  }
+
+  .rating-stars-block__container svg {
+    width: var(--icon-size, 16px);
+    height: var(--icon-size, 16px);
+    flex-shrink: 0;
+  }
+
+  .rating-stars-block__container--underlay svg {
+    color: var(--star-background-color, #ececec);
+  }
+
+  .rating-stars-block__container--overlay {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    width: calc(var(--rating, 0) / var(--visible-stars, 5) * 100%);
+  }
+
+  .rating-stars-block__container--overlay svg {
+    color: var(--star-color, #ffcc00);
+  }
+
+  .rating-stars-block__label {
+    font-size: 1.4rem;
+    color: rgb(var(--color-foreground-rgb) / var(--opacity-muted-text, 0.7));
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Rating stars",
+  "tag": null,
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Reads the rating from a reviews app's product.metafields.reviews.rating / rating_count. Nothing renders until a reviews app is connected."
+    },
+    {
+      "type": "header",
+      "content": "Stars"
+    },
+    {
+      "type": "range",
+      "id": "icon_size",
+      "label": "Size",
+      "min": 10,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "color",
+      "id": "star_color",
+      "label": "Star color",
+      "default": "#ffcc00"
+    },
+    {
+      "type": "color",
+      "id": "star_background_color",
+      "label": "Empty star color",
+      "default": "#ececec"
+    },
+    {
+      "type": "select",
+      "id": "alignment",
+      "label": "Alignment",
+      "options": [
+        { "value": "flex-start", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "flex-end", "label": "Right" }
+      ],
+      "default": "flex-start"
+    },
+    {
+      "type": "header",
+      "content": "Review count"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_count",
+      "label": "Show review count",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "count_format",
+      "label": "Review count text",
+      "info": "{{ count }} is replaced with the review count",
+      "default": "(+{{ count }} Reviews)",
+      "visible_if": "{{ block.settings.show_count }}"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Rating stars",
+      "category": "Product"
+    }
+  ]
+}
+{% endschema %}
