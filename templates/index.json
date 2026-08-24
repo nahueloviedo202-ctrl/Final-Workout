@@ -381,8 +381,8 @@
         "border_opacity": 100,
         "border_color": "",
         "border_radius": 0,
-        "padding-block-start": 64,
-        "padding-block-end": 64
+        "padding-block-start": 20,
+        "padding-block-end": 20
       }
     },
     "section_WPXztP": {
@@ -1238,10 +1238,10 @@
             "link": "",
             "open_in_new_tab": false,
             "placeholder": "",
-            "padding-block-start": 40,
-            "padding-block-end": 40,
-            "padding-inline-start": 20,
-            "padding-inline-end": 20
+            "padding-block-start": 50,
+            "padding-block-end": 50,
+            "padding-inline-start": 30,
+            "padding-inline-end": 30
           },
           "blocks": {
             "text_YdDUzf": {
@@ -1431,7 +1431,7 @@
         "border_color": "",
         "background_color": "#fdf6ec",
         "padding-block-start": 60,
-        "padding-block-end": 30
+        "padding-block-end": 60
       }
     },
     "section_LXUL7M": {
@@ -1837,6 +1837,65 @@
         "border_radius": 0,
         "padding-block-start": 60,
         "padding-block-end": 60
+      }
+    },
+    "comparison_table_j4eGLQ": {
+      "type": "comparison-table",
+      "blocks": {
+        "comparison_table_row_dVN9rL": {
+          "type": "comparison-table-row",
+          "settings": {
+            "row_label": "Fast & Free Shipping",
+            "your_brand_status": "check",
+            "others_status": "cross"
+          },
+          "blocks": {}
+        },
+        "comparison_table_row_irUFtT": {
+          "type": "comparison-table-row",
+          "settings": {
+            "row_label": "24/7 Customer Support",
+            "your_brand_status": "check",
+            "others_status": "cross"
+          },
+          "blocks": {}
+        },
+        "comparison_table_row_Cc4Q7L": {
+          "type": "comparison-table-row",
+          "settings": {
+            "row_label": "Quality Guaranteed",
+            "your_brand_status": "check",
+            "others_status": "cross"
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "comparison_table_row_dVN9rL",
+        "comparison_table_row_irUFtT",
+        "comparison_table_row_Cc4Q7L"
+      ],
+      "name": "Comparison table",
+      "settings": {
+        "heading": "Why Choose The Final Workout",
+        "heading_type_preset": "h2",
+        "heading_alignment": "center",
+        "subheading": "<p>Discover what sets The Final Workout apart from the competition. We're committed to delivering exceptional quality, outstanding customer service, and unbeatable value on every purchase.</p>",
+        "section_width": "page-width",
+        "border_radius": 32,
+        "brand_column_heading": "The Final Workout",
+        "highlighted_column_background_color": "#c9a84c",
+        "highlighted_column_text_color": "#ffffff",
+        "others_column_heading": "Others",
+        "regular_cell_background_color": "#fdf6ec",
+        "regular_cell_text_color": "{{ settings.color_palette.foreground }}",
+        "check_icon_color": "#ffffff",
+        "check_background_color": "#53af01",
+        "cross_icon_color": "#121212",
+        "cross_background_color": "#f2e7d6",
+        "background_color": "#fdf6ec",
+        "padding-block-start": 60,
+        "padding-block-end": 36
       }
     },
     "section_QiLNme": {
@@ -2486,65 +2545,6 @@
         "padding-block-start": 48,
         "padding-block-end": 48
       }
-    },
-    "comparison_table_j4eGLQ": {
-      "type": "comparison-table",
-      "blocks": {
-        "comparison_table_row_dVN9rL": {
-          "type": "comparison-table-row",
-          "settings": {
-            "row_label": "Fast & Free Shipping",
-            "your_brand_status": "check",
-            "others_status": "cross"
-          },
-          "blocks": {}
-        },
-        "comparison_table_row_irUFtT": {
-          "type": "comparison-table-row",
-          "settings": {
-            "row_label": "24/7 Customer Support",
-            "your_brand_status": "check",
-            "others_status": "cross"
-          },
-          "blocks": {}
-        },
-        "comparison_table_row_Cc4Q7L": {
-          "type": "comparison-table-row",
-          "settings": {
-            "row_label": "Quality Guaranteed",
-            "your_brand_status": "check",
-            "others_status": "cross"
-          },
-          "blocks": {}
-        }
-      },
-      "block_order": [
-        "comparison_table_row_dVN9rL",
-        "comparison_table_row_irUFtT",
-        "comparison_table_row_Cc4Q7L"
-      ],
-      "name": "Comparison table",
-      "settings": {
-        "heading": "Why Choose The Final Workout",
-        "heading_type_preset": "h2",
-        "heading_alignment": "center",
-        "subheading": "<p>Discover what sets The Final Workout apart from the competition. We're committed to delivering exceptional quality, outstanding customer service, and unbeatable value on every purchase.</p>",
-        "section_width": "page-width",
-        "border_radius": 32,
-        "brand_column_heading": "The Final Workout",
-        "highlighted_column_background_color": "#C9A84C",
-        "highlighted_column_text_color": "#ffffff",
-        "others_column_heading": "Others",
-        "regular_cell_background_color": "#FDF6EC",
-        "regular_cell_text_color": "{{ settings.color_palette.foreground }}",
-        "check_icon_color": "#ffffff",
-        "check_background_color": "#53af01",
-        "cross_icon_color": "#121212",
-        "cross_background_color": "#F2E7D6",
-        "background_color": "#FDF6EC",
-        "padding-block-start": 60,
-        "padding-block-end": 36
-      }
     }
   },
   "order": [
@@ -2556,7 +2556,7 @@
     "hero_hwCGPz",
     "testimonials_7zeqRi",
     "section_LXUL7M",
-    "section_QiLNme",
-    "comparison_table_j4eGLQ"
+    "comparison_table_j4eGLQ",
+    "section_QiLNme"
   ]
 }
