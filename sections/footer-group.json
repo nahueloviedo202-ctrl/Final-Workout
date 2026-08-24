@@ -11,6 +11,20 @@
   "type": "footer",
   "name": "t:names.footer",
   "sections": {
+    "shape_divider_dkbPVG": {
+      "type": "shape-divider",
+      "name": "Shape divider",
+      "settings": {
+        "height": 80,
+        "shape_color": "#C9A84C",
+        "flip": false,
+        "animate": true,
+        "animation_speed": 1,
+        "space_above": 0,
+        "space_below": 0,
+        "background_color": ""
+      }
+    },
     "footer_m9NzUG": {
       "type": "footer",
       "blocks": {
@@ -1010,13 +1024,14 @@
       "settings": {
         "section_width": "page-width",
         "gap": 20,
-        "background_color": "#C9A84C",
+        "background_color": "#c9a84c",
         "padding-block-start": 30,
         "padding-block-end": 30
       }
     }
   },
   "order": [
+    "shape_divider_dkbPVG",
     "footer_m9NzUG"
   ]
 }
