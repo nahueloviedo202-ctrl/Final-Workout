@@ -2545,6 +2545,55 @@
         "padding-block-start": 48,
         "padding-block-end": 48
       }
+    },
+    "results_RhLgBy": {
+      "type": "results",
+      "blocks": {
+        "result_stat_G7ibpF": {
+          "type": "result-stat",
+          "settings": {
+            "percentage": 93,
+            "text": "<p>Our users love how these exercises transform their daily routine from the first attempt, with simple movements and easy-to-follow steps.</p>"
+          },
+          "blocks": {}
+        },
+        "result_stat_n8xgye": {
+          "type": "result-stat",
+          "settings": {
+            "percentage": 96,
+            "text": "<p>More than 10,000 passionate trainees have already discovered our exercises and never looked back. Each routine is a unique fitness</p>"
+          },
+          "blocks": {}
+        },
+        "result_stat_GGHVMg": {
+          "type": "result-stat",
+          "settings": {
+            "percentage": 100,
+            "text": "<p>Simple, effective, and results-driven. These exercises are exactly what your body has been waiting for to build real strength.</p>"
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "result_stat_G7ibpF",
+        "result_stat_n8xgye",
+        "result_stat_GGHVMg"
+      ],
+      "name": "Results",
+      "settings": {
+        "heading": "Discover Our Best Exercises",
+        "heading_type_preset": "h2",
+        "heading_alignment": "center",
+        "subheading": "<p>Explore our collection of effective and easy-to-follow exercises. From classic movements to modern routines, find the motivation you need to build strength and confidence at home, with proven techniques and no equipment needed.</p>",
+        "section_width": "page-width",
+        "ring_size": 70,
+        "ring_thickness": 7,
+        "ring_color": "#C9A84C",
+        "ring_track_color": "",
+        "background_color": "#FDF6EC",
+        "padding-block-start": 36,
+        "padding-block-end": 36
+      }
     }
   },
   "order": [
@@ -2557,6 +2606,7 @@
     "testimonials_7zeqRi",
     "section_LXUL7M",
     "comparison_table_j4eGLQ",
-    "section_QiLNme"
+    "section_QiLNme",
+    "results_RhLgBy"
   ]
 }
