@@ -21,7 +21,7 @@
 {% endif %}
 
 <div
-  class="shape-divider{% if section.settings.flip %} shape-divider--flip{% endif %}{% if section.settings.animate == false %} shape-divider--static{% endif %}"
+  class="shape-divider{% if section.settings.flip %} shape-divider--flip{% endif %}{% if section.settings.animate == false %} shape-divider--static{% endif %}{% if section.settings.background_color != blank %} color-custom-{{ section.id }}{% endif %}"
   style="
     height: {{ section.settings.height }}px;
     {% if section.settings.shape_color != blank %}color: {{ section.settings.shape_color }};{% endif %}
@@ -74,6 +74,7 @@
     width: 100%;
     overflow: hidden;
     line-height: 0;
+    background-color: var(--color-background);
   }
 
   .shape-divider--flip {
@@ -220,7 +221,8 @@
     {
       "type": "color",
       "id": "background_color",
-      "label": "Spacer background color",
+      "label": "Background color",
+      "info": "Fills the empty space around the wave shape and the optional spacers above/below. Doesn't affect the shape color.",
       "placeholder": "Default"
     }
   ],
