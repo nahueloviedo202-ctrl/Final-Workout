@@ -1257,6 +1257,7 @@
       "name": "t:names.hero",
       "settings": {
         "media_type_1": "image",
+        "image_1": "shopify://shop_images/Gemini_Generated_Image_s9lo8s9lo8s9lo8s.webp",
         "media_type_2": "image",
         "stack_media_on_mobile": false,
         "custom_mobile_media": false,
