@@ -88,7 +88,7 @@
   }
 
   .comparison-table-section__content {
-    max-width: 48rem;
+    max-width: 38rem;
   }
 
   .comparison-table-section__heading {
@@ -106,6 +106,8 @@
   .comparison-table-section__table-wrapper {
     max-width: 100%;
     overflow-x: auto;
+    overflow-y: visible;
+    padding-block: 1.2rem;
   }
 
   .comparison-table {
@@ -117,21 +119,21 @@
   .comparison-table__cell {
     background-color: var(--cell-background, transparent);
     color: var(--cell-color, inherit);
-    padding: 1.6rem 2rem;
+    padding: 1.2rem 1.6rem;
     text-align: center;
     vertical-align: middle;
-    font-size: var(--font-paragraph--size, 1.5rem);
-    min-width: 9rem;
+    font-size: 1.4rem;
+    min-width: 7.5rem;
   }
 
   .comparison-table__cell--label {
     text-align: start;
-    min-width: 16rem;
+    min-width: 13rem;
   }
 
   th.comparison-table__cell--highlighted,
   th.comparison-table__cell--regular {
-    font-size: 1.8rem;
+    font-size: 1.6rem;
     font-weight: 600;
   }
 
@@ -140,8 +142,18 @@
     box-shadow: inset 0 -1px 0 0 rgb(var(--color-foreground-rgb) / 0.1);
   }
 
-  /* The highlighted column reads as its own rounded "pill" spanning every row —
-     only its first (header) and last (final row) cells get corners. */
+  /* The highlighted column reads as its own rounded, elevated "pill" spanning every row.
+     Only its first (header) and last (final row) cells get corners, and every cell in the
+     column gets the same drop shadow — internal seams stay hidden because each cell's opaque
+     background paints over the shadow bled from its neighbor, leaving one continuous shadow
+     around the outside of the column. Raising the stacking context (position + z-index) keeps
+     that shadow visible above the plain label/others cells sitting beside it. */
+  .comparison-table__cell--highlighted {
+    position: relative;
+    z-index: var(--layer-raised, 1);
+    box-shadow: 0 12px 20px -6px rgb(0 0 0 / 0.3);
+  }
+
   .comparison-table thead .comparison-table__cell--highlighted {
     border-start-start-radius: var(--border-radius, 0);
     border-start-end-radius: var(--border-radius, 0);
@@ -172,18 +184,18 @@
 
   @media screen and (max-width: 749px) {
     .comparison-table__cell {
-      padding: 1.2rem 1rem;
-      font-size: 1.3rem;
-      min-width: 7rem;
+      padding: 1rem 0.8rem;
+      font-size: 1.2rem;
+      min-width: 6rem;
     }
 
     .comparison-table__cell--label {
-      min-width: 12rem;
+      min-width: 10rem;
     }
 
     th.comparison-table__cell--highlighted,
     th.comparison-table__cell--regular {
-      font-size: 1.5rem;
+      font-size: 1.4rem;
     }
   }
 {% endstylesheet %}
