@@ -1,0 +1,90 @@
+{%- doc -%}
+  Renders a single comparison-table row (`<tr>`) with a feature label, a status icon for the
+  "your brand" highlighted column and a status icon for the "others" column.
+
+  Reads shared column colors from the parent `comparison-table` section so every row stays
+  visually consistent, while the label and the check/cross state of each column stay fully
+  editable per block.
+{%- enddoc -%}
+
+{% liquid
+  assign block_settings = block.settings
+  assign section_settings = section.settings
+%}
+
+<tr {{ block.shopify_attributes }}>
+  <td
+    class="comparison-table__cell comparison-table__cell--label"
+    style="
+      --cell-background: {{ section_settings.regular_cell_background_color | default: '#ffffff' }};
+      --cell-color: {{ section_settings.regular_cell_text_color | default: '#121212' }};
+    "
+  >
+    <strong>{{ block_settings.row_label }}</strong>
+  </td>
+
+  <td
+    class="comparison-table__cell comparison-table__cell--highlighted"
+    style="
+      --cell-background: {{ section_settings.highlighted_column_background_color | default: '#2e2a39' }};
+      --cell-color: {{ section_settings.highlighted_column_text_color | default: '#ffffff' }};
+    "
+  >
+    {% render 'comparison-table-status', status: block_settings.your_brand_status, section_settings: section_settings %}
+  </td>
+
+  <td
+    class="comparison-table__cell comparison-table__cell--regular"
+    style="
+      --cell-background: {{ section_settings.regular_cell_background_color | default: '#ffffff' }};
+      --cell-color: {{ section_settings.regular_cell_text_color | default: '#121212' }};
+    "
+  >
+    {% render 'comparison-table-status', status: block_settings.others_status, section_settings: section_settings %}
+  </td>
+</tr>
+
+{% schema %}
+{
+  "name": "Comparison row",
+  "tag": null,
+  "settings": [
+    {
+      "type": "text",
+      "id": "row_label",
+      "label": "Feature",
+      "default": "Fast & Free Shipping"
+    },
+    {
+      "type": "select",
+      "id": "your_brand_status",
+      "label": "Your brand",
+      "options": [
+        { "value": "check", "label": "Check mark" },
+        { "value": "cross", "label": "Cross mark" }
+      ],
+      "default": "check"
+    },
+    {
+      "type": "select",
+      "id": "others_status",
+      "label": "Others",
+      "options": [
+        { "value": "check", "label": "Check mark" },
+        { "value": "cross", "label": "Cross mark" }
+      ],
+      "default": "cross"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Comparison row",
+      "settings": {
+        "row_label": "Fast & Free Shipping",
+        "your_brand_status": "check",
+        "others_status": "cross"
+      }
+    }
+  ]
+}
+{% endschema %}

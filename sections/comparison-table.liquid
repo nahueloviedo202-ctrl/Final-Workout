@@ -1,0 +1,394 @@
+{%- comment -%}
+  Comparison table section.
+
+  Renders a centered heading and sub-text followed by a comparison table with a highlighted
+  "your brand" column and an "others" column. Each feature row is a `comparison-table-row` block
+  so merchants can add, remove, reorder and edit rows from the Theme Editor. Column colors, the
+  check/cross badge colors, table radius and typography are all editable section settings.
+{%- endcomment -%}
+
+{% liquid
+  if section.settings.background_color != blank
+    render 'contrast-override', background_color: section.settings.background_color, section_id: section.id
+  endif
+
+  assign brand_heading = section.settings.brand_column_heading | default: shop.name
+%}
+
+<div
+  class="section-background{% if section.settings.background_color != blank %} color-custom-{{ section.id }}{% endif %}"
+></div>
+<div
+  class="
+    section
+    section--{{ section.settings.section_width }}
+    comparison-table-section
+    spacing-style
+    {% if section.settings.background_color != blank %}color-custom-{{ section.id }}{% endif %}
+  "
+  style="{% render 'spacing-style', settings: section.settings %}"
+>
+  {% if section.settings.heading != blank or section.settings.subheading != blank %}
+    <div
+      class="comparison-table-section__content"
+      style="text-align: {{ section.settings.heading_alignment }};"
+    >
+      {% if section.settings.heading != blank %}
+        <h2 class="comparison-table-section__heading {{ section.settings.heading_type_preset }}">
+          {{- section.settings.heading -}}
+        </h2>
+      {% endif %}
+
+      {% if section.settings.subheading != blank %}
+        <div class="comparison-table-section__subheading rte">
+          {{ section.settings.subheading }}
+        </div>
+      {% endif %}
+    </div>
+  {% endif %}
+
+  <div class="comparison-table-section__table-wrapper">
+    <table
+      class="comparison-table"
+      style="--border-radius: {{ section.settings.border_radius }}px;"
+    >
+      <thead>
+        <tr>
+          <th class="comparison-table__cell comparison-table__cell--label"></th>
+          <th
+            class="comparison-table__cell comparison-table__cell--highlighted"
+            style="
+              --cell-background: {{ section.settings.highlighted_column_background_color | default: '#2e2a39' }};
+              --cell-color: {{ section.settings.highlighted_column_text_color | default: '#ffffff' }};
+            "
+          >
+            {{ brand_heading }}
+          </th>
+          <th
+            class="comparison-table__cell comparison-table__cell--regular"
+            style="
+              --cell-background: {{ section.settings.regular_cell_background_color | default: '#ffffff' }};
+              --cell-color: {{ section.settings.regular_cell_text_color | default: '#121212' }};
+            "
+          >
+            {{ section.settings.others_column_heading }}
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        {% content_for 'blocks' %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+{% stylesheet %}
+  .comparison-table-section__content {
+    max-width: var(--narrow-page-width, 60rem);
+    margin-inline: auto;
+    margin-block-end: 2.4rem;
+  }
+
+  .comparison-table-section__heading {
+    margin: 0;
+  }
+
+  .comparison-table-section__subheading {
+    margin-block-start: 1.2rem;
+  }
+
+  .comparison-table-section__subheading :is(p) {
+    margin: 0;
+  }
+
+  .comparison-table-section__table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  .comparison-table {
+    width: 100%;
+    max-width: 64rem;
+    margin-inline: auto;
+    border-collapse: separate;
+    border-spacing: 0;
+    overflow: hidden;
+    table-layout: fixed;
+    border-radius: var(--border-radius, 0);
+  }
+
+  .comparison-table__cell {
+    background-color: var(--cell-background);
+    color: var(--cell-color);
+    padding: 1.6rem 1.2rem;
+    text-align: center;
+    vertical-align: middle;
+    font-size: var(--font-paragraph--size, 1.5rem);
+  }
+
+  .comparison-table__cell--label {
+    text-align: start;
+    width: 40%;
+  }
+
+  th.comparison-table__cell--highlighted,
+  th.comparison-table__cell--regular {
+    font-size: 1.8rem;
+    font-weight: 600;
+  }
+
+  .comparison-table tbody tr:not(:last-child) .comparison-table__cell--label,
+  .comparison-table tbody tr:not(:last-child) .comparison-table__cell--regular {
+    box-shadow: inset 0 -1px 0 0 rgb(var(--color-foreground-rgb) / 0.1);
+  }
+
+  @media screen and (max-width: 749px) {
+    .comparison-table__cell {
+      padding: 1.2rem 0.8rem;
+      font-size: 1.3rem;
+    }
+
+    th.comparison-table__cell--highlighted,
+    th.comparison-table__cell--regular {
+      font-size: 1.5rem;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Comparison table",
+  "tag": "section",
+  "class": "section-comparison-table",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "blocks": [
+    {
+      "type": "comparison-table-row"
+    }
+  ],
+  "settings": [
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Why Choose Us"
+    },
+    {
+      "type": "select",
+      "id": "heading_type_preset",
+      "label": "Heading size",
+      "options": [
+        { "value": "h1", "label": "Extra large" },
+        { "value": "h2", "label": "Large" },
+        { "value": "h3", "label": "Medium" },
+        { "value": "h4", "label": "Small" }
+      ],
+      "default": "h1"
+    },
+    {
+      "type": "text_alignment",
+      "id": "heading_alignment",
+      "label": "Heading alignment",
+      "default": "center"
+    },
+    {
+      "type": "richtext",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "<p>Discover what sets us apart from the competition. We're committed to delivering exceptional quality, outstanding customer service, and unbeatable value on every purchase.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "Width",
+      "options": [
+        { "value": "page-width", "label": "Page" },
+        { "value": "full-width", "label": "Full width" }
+      ],
+      "default": "page-width"
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "Table corner radius",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "header",
+      "content": "\"Your brand\" column"
+    },
+    {
+      "type": "text",
+      "id": "brand_column_heading",
+      "label": "Column heading",
+      "placeholder": "Defaults to shop name"
+    },
+    {
+      "type": "color",
+      "id": "highlighted_column_background_color",
+      "label": "Background color",
+      "default": "#2e2a39"
+    },
+    {
+      "type": "color",
+      "id": "highlighted_column_text_color",
+      "label": "Text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "\"Others\" column"
+    },
+    {
+      "type": "text",
+      "id": "others_column_heading",
+      "label": "Column heading",
+      "default": "Others"
+    },
+    {
+      "type": "color",
+      "id": "regular_cell_background_color",
+      "label": "Background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "regular_cell_text_color",
+      "label": "Text color",
+      "default": "#121212"
+    },
+    {
+      "type": "header",
+      "content": "Check mark"
+    },
+    {
+      "type": "color",
+      "id": "check_icon_color",
+      "label": "Icon color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "check_background_color",
+      "label": "Background color",
+      "default": "#53af01"
+    },
+    {
+      "type": "header",
+      "content": "Cross mark"
+    },
+    {
+      "type": "color",
+      "id": "cross_icon_color",
+      "label": "Icon color",
+      "default": "#121212"
+    },
+    {
+      "type": "color",
+      "id": "cross_background_color",
+      "label": "Background color",
+      "default": "#dbdbdb"
+    },
+    {
+      "type": "header",
+      "content": "Section background"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "placeholder": "Default"
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 36
+    }
+  ],
+  "presets": [
+    {
+      "name": "Comparison table",
+      "category": "Storytelling",
+      "settings": {
+        "heading": "Why Choose Us",
+        "heading_type_preset": "h1",
+        "heading_alignment": "center",
+        "subheading": "<p>Discover what sets us apart from the competition. We're committed to delivering exceptional quality, outstanding customer service, and unbeatable value on every purchase.</p>",
+        "section_width": "page-width",
+        "border_radius": 32,
+        "highlighted_column_background_color": "#2e2a39",
+        "highlighted_column_text_color": "#ffffff",
+        "others_column_heading": "Others",
+        "regular_cell_background_color": "#ffffff",
+        "regular_cell_text_color": "#121212",
+        "check_icon_color": "#ffffff",
+        "check_background_color": "#53af01",
+        "cross_icon_color": "#121212",
+        "cross_background_color": "#dbdbdb",
+        "padding-block-start": 36,
+        "padding-block-end": 36
+      },
+      "blocks": {
+        "row_1": {
+          "type": "comparison-table-row",
+          "settings": {
+            "row_label": "Fast & Free Shipping",
+            "your_brand_status": "check",
+            "others_status": "cross"
+          }
+        },
+        "row_2": {
+          "type": "comparison-table-row",
+          "settings": {
+            "row_label": "24/7 Customer Support",
+            "your_brand_status": "check",
+            "others_status": "cross"
+          }
+        },
+        "row_3": {
+          "type": "comparison-table-row",
+          "settings": {
+            "row_label": "Quality Guaranteed",
+            "your_brand_status": "check",
+            "others_status": "cross"
+          }
+        }
+      },
+      "block_order": ["row_1", "row_2", "row_3"]
+    }
+  ]
+}
+{% endschema %}
