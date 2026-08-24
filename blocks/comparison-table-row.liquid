@@ -15,30 +15,21 @@
 <tr {{ block.shopify_attributes }}>
   <td
     class="comparison-table__cell comparison-table__cell--label"
-    style="
-      --cell-background: {{ section_settings.regular_cell_background_color | default: '#ffffff' }};
-      --cell-color: {{ section_settings.regular_cell_text_color | default: '#121212' }};
-    "
+    style="{% render 'comparison-table-cell-style', background_color: section_settings.regular_cell_background_color, text_color: section_settings.regular_cell_text_color %}"
   >
     <strong>{{ block_settings.row_label }}</strong>
   </td>
 
   <td
     class="comparison-table__cell comparison-table__cell--highlighted"
-    style="
-      --cell-background: {{ section_settings.highlighted_column_background_color | default: '#2e2a39' }};
-      --cell-color: {{ section_settings.highlighted_column_text_color | default: '#ffffff' }};
-    "
+    style="{% render 'comparison-table-cell-style', background_color: section_settings.highlighted_column_background_color, text_color: section_settings.highlighted_column_text_color %}"
   >
     {% render 'comparison-table-status', status: block_settings.your_brand_status, section_settings: section_settings %}
   </td>
 
   <td
     class="comparison-table__cell comparison-table__cell--regular"
-    style="
-      --cell-background: {{ section_settings.regular_cell_background_color | default: '#ffffff' }};
-      --cell-color: {{ section_settings.regular_cell_text_color | default: '#121212' }};
-    "
+    style="{% render 'comparison-table-cell-style', background_color: section_settings.regular_cell_background_color, text_color: section_settings.regular_cell_text_color %}"
   >
     {% render 'comparison-table-status', status: block_settings.others_status, section_settings: section_settings %}
   </td>

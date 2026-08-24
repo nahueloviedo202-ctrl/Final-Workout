@@ -1,0 +1,18 @@
+{%- doc -%}
+  Outputs --cell-background / --cell-color custom properties for a comparison-table cell.
+  Omits a variable entirely when its color setting is blank, so the cell falls back to the
+  section's ambient background/foreground instead of forcing a hardcoded white or black.
+
+  @param {string} [background_color]
+  @param {string} [text_color]
+
+  @example
+  <td style="{% render 'comparison-table-cell-style', background_color: settings.bg, text_color: settings.text %}">
+{%- enddoc -%}
+
+{%- if background_color != blank -%}
+  --cell-background: {{ background_color }};
+{%- endif -%}
+{%- if text_color != blank -%}
+  --cell-color: {{ text_color }};
+{%- endif -%}

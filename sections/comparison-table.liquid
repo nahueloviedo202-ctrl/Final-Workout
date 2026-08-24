@@ -1,10 +1,11 @@
 {%- comment -%}
   Comparison table section.
 
-  Renders a centered heading and sub-text followed by a comparison table with a highlighted
-  "your brand" column and an "others" column. Each feature row is a `comparison-table-row` block
-  so merchants can add, remove, reorder and edit rows from the Theme Editor. Column colors, the
-  check/cross badge colors, table radius and typography are all editable section settings.
+  Renders a heading/sub-text block side-by-side with a compact comparison table (stacked on
+  mobile) with a highlighted "your brand" column and an "others" column. Each feature row is a
+  `comparison-table-row` block so merchants can add, remove, reorder and edit rows from the Theme
+  Editor. Column colors, the check/cross badge colors, table radius and typography are all
+  editable section settings.
 {%- endcomment -%}
 
 {% liquid
@@ -28,65 +29,66 @@
   "
   style="{% render 'spacing-style', settings: section.settings %}"
 >
-  {% if section.settings.heading != blank or section.settings.subheading != blank %}
-    <div
-      class="comparison-table-section__content"
-      style="text-align: {{ section.settings.heading_alignment }};"
-    >
-      {% if section.settings.heading != blank %}
-        <h2 class="comparison-table-section__heading {{ section.settings.heading_type_preset }}">
-          {{- section.settings.heading -}}
-        </h2>
-      {% endif %}
+  <div class="comparison-table-section__layout">
+    {% if section.settings.heading != blank or section.settings.subheading != blank %}
+      <div
+        class="comparison-table-section__content"
+        style="text-align: {{ section.settings.heading_alignment }};"
+      >
+        {% if section.settings.heading != blank %}
+          <h2 class="comparison-table-section__heading {{ section.settings.heading_type_preset }}">
+            {{- section.settings.heading -}}
+          </h2>
+        {% endif %}
 
-      {% if section.settings.subheading != blank %}
-        <div class="comparison-table-section__subheading rte">
-          {{ section.settings.subheading }}
-        </div>
-      {% endif %}
+        {% if section.settings.subheading != blank %}
+          <div class="comparison-table-section__subheading rte">
+            {{ section.settings.subheading }}
+          </div>
+        {% endif %}
+      </div>
+    {% endif %}
+
+    <div class="comparison-table-section__table-wrapper">
+      <table
+        class="comparison-table"
+        style="--border-radius: {{ section.settings.border_radius }}px;"
+      >
+        <thead>
+          <tr>
+            <th class="comparison-table__cell comparison-table__cell--label"></th>
+            <th
+              class="comparison-table__cell comparison-table__cell--highlighted"
+              style="{% render 'comparison-table-cell-style', background_color: section.settings.highlighted_column_background_color, text_color: section.settings.highlighted_column_text_color %}"
+            >
+              {{ brand_heading }}
+            </th>
+            <th
+              class="comparison-table__cell comparison-table__cell--regular"
+              style="{% render 'comparison-table-cell-style', background_color: section.settings.regular_cell_background_color, text_color: section.settings.regular_cell_text_color %}"
+            >
+              {{ section.settings.others_column_heading }}
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {% content_for 'blocks' %}
+        </tbody>
+      </table>
     </div>
-  {% endif %}
-
-  <div class="comparison-table-section__table-wrapper">
-    <table
-      class="comparison-table"
-      style="--border-radius: {{ section.settings.border_radius }}px;"
-    >
-      <thead>
-        <tr>
-          <th class="comparison-table__cell comparison-table__cell--label"></th>
-          <th
-            class="comparison-table__cell comparison-table__cell--highlighted"
-            style="
-              --cell-background: {{ section.settings.highlighted_column_background_color | default: '#2e2a39' }};
-              --cell-color: {{ section.settings.highlighted_column_text_color | default: '#ffffff' }};
-            "
-          >
-            {{ brand_heading }}
-          </th>
-          <th
-            class="comparison-table__cell comparison-table__cell--regular"
-            style="
-              --cell-background: {{ section.settings.regular_cell_background_color | default: '#ffffff' }};
-              --cell-color: {{ section.settings.regular_cell_text_color | default: '#121212' }};
-            "
-          >
-            {{ section.settings.others_column_heading }}
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        {% content_for 'blocks' %}
-      </tbody>
-    </table>
   </div>
 </div>
 
 {% stylesheet %}
+  .comparison-table-section__layout {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3.2rem;
+  }
+
   .comparison-table-section__content {
-    max-width: var(--narrow-page-width, 60rem);
-    margin-inline: auto;
-    margin-block-end: 2.4rem;
+    max-width: 48rem;
   }
 
   .comparison-table-section__heading {
@@ -102,33 +104,29 @@
   }
 
   .comparison-table-section__table-wrapper {
-    width: 100%;
+    max-width: 100%;
     overflow-x: auto;
   }
 
   .comparison-table {
-    width: 100%;
-    max-width: 64rem;
-    margin-inline: auto;
     border-collapse: separate;
     border-spacing: 0;
-    overflow: hidden;
-    table-layout: fixed;
-    border-radius: var(--border-radius, 0);
+    margin-inline: auto;
   }
 
   .comparison-table__cell {
-    background-color: var(--cell-background);
-    color: var(--cell-color);
-    padding: 1.6rem 1.2rem;
+    background-color: var(--cell-background, transparent);
+    color: var(--cell-color, inherit);
+    padding: 1.6rem 2rem;
     text-align: center;
     vertical-align: middle;
     font-size: var(--font-paragraph--size, 1.5rem);
+    min-width: 9rem;
   }
 
   .comparison-table__cell--label {
     text-align: start;
-    width: 40%;
+    min-width: 16rem;
   }
 
   th.comparison-table__cell--highlighted,
@@ -142,10 +140,45 @@
     box-shadow: inset 0 -1px 0 0 rgb(var(--color-foreground-rgb) / 0.1);
   }
 
+  /* The highlighted column reads as its own rounded "pill" spanning every row —
+     only its first (header) and last (final row) cells get corners. */
+  .comparison-table thead .comparison-table__cell--highlighted {
+    border-start-start-radius: var(--border-radius, 0);
+    border-start-end-radius: var(--border-radius, 0);
+  }
+
+  .comparison-table tbody tr:last-child .comparison-table__cell--highlighted {
+    border-end-start-radius: var(--border-radius, 0);
+    border-end-end-radius: var(--border-radius, 0);
+  }
+
+  @media screen and (min-width: 750px) {
+    .comparison-table-section__layout {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: nowrap;
+      gap: 4rem;
+    }
+
+    .comparison-table-section__content {
+      flex: 1 1 40%;
+    }
+
+    .comparison-table-section__table-wrapper {
+      flex: 0 0 auto;
+    }
+  }
+
   @media screen and (max-width: 749px) {
     .comparison-table__cell {
-      padding: 1.2rem 0.8rem;
+      padding: 1.2rem 1rem;
       font-size: 1.3rem;
+      min-width: 7rem;
+    }
+
+    .comparison-table__cell--label {
+      min-width: 12rem;
     }
 
     th.comparison-table__cell--highlighted,
@@ -195,7 +228,7 @@
       "type": "text_alignment",
       "id": "heading_alignment",
       "label": "Heading alignment",
-      "default": "center"
+      "default": "left"
     },
     {
       "type": "richtext",
@@ -263,13 +296,13 @@
       "type": "color",
       "id": "regular_cell_background_color",
       "label": "Background color",
-      "default": "#ffffff"
+      "placeholder": "Default"
     },
     {
       "type": "color",
       "id": "regular_cell_text_color",
       "label": "Text color",
-      "default": "#121212"
+      "placeholder": "Default"
     },
     {
       "type": "header",
@@ -345,15 +378,13 @@
       "settings": {
         "heading": "Why Choose Us",
         "heading_type_preset": "h1",
-        "heading_alignment": "center",
+        "heading_alignment": "left",
         "subheading": "<p>Discover what sets us apart from the competition. We're committed to delivering exceptional quality, outstanding customer service, and unbeatable value on every purchase.</p>",
         "section_width": "page-width",
         "border_radius": 32,
         "highlighted_column_background_color": "#2e2a39",
         "highlighted_column_text_color": "#ffffff",
         "others_column_heading": "Others",
-        "regular_cell_background_color": "#ffffff",
-        "regular_cell_text_color": "#121212",
         "check_icon_color": "#ffffff",
         "check_background_color": "#53af01",
         "cross_icon_color": "#121212",
