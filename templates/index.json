@@ -1367,9 +1367,9 @@
           "settings": {
             "show_rating": true,
             "rating": 5,
-            "heading": "Amazing Recipes!",
+            "heading": "Amazing Exercises!",
             "heading_type_preset": "h4",
-            "text": "<p>The recipes were easy to follow and the meals looked amazing. I made the pasta dish on my first try and it turned out perfect.</p>",
+            "text": "<p>The exercises were easy to follow and the routines looked amazing. I tried the plank on my first try and it turned out perfect.</p>",
             "author": "Sarah M."
           },
           "blocks": {}
@@ -1381,7 +1381,7 @@
             "rating": 5,
             "heading": "Perfect for Busy Weeknights",
             "heading_type_preset": "h4",
-            "text": "<p>Perfect for quick dinners during the week. Simple ingredients and great flavor. I never thought cooking at home could be this easy.</p>",
+            "text": "<p>Perfect for quick workouts during the week. Simple movements and great results. I never thought training at home could be this easy.</p>",
             "author": "James R."
           },
           "blocks": {}
@@ -1393,7 +1393,7 @@
             "rating": 5,
             "heading": "Love the Digital Format",
             "heading_type_preset": "h4",
-            "text": "<p>I loved the digital format. I could follow everything directly from my phone while cooking. Highly recommend to anyone who wants to cook better.</p>",
+            "text": "<p>I loved the digital format. I could follow everything directly from my phone while training. Highly recommend to anyone who wants to train better.</p>",
             "author": "Emily T."
           },
           "blocks": {}
