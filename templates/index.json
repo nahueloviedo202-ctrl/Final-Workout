@@ -2542,8 +2542,8 @@
         "border_opacity": 100,
         "border_color": "",
         "border_radius": 0,
-        "padding-block-start": 48,
-        "padding-block-end": 48
+        "padding-block-start": 60,
+        "padding-block-end": 60
       }
     },
     "results_RhLgBy": {
@@ -2588,9 +2588,9 @@
         "section_width": "page-width",
         "ring_size": 70,
         "ring_thickness": 7,
-        "ring_color": "#C9A84C",
+        "ring_color": "#c9a84c",
         "ring_track_color": "",
-        "background_color": "#FDF6EC",
+        "background_color": "#fdf6ec",
         "padding-block-start": 60,
         "padding-block-end": 60
       }
@@ -2649,9 +2649,9 @@
               "settings": {
                 "label": "Send",
                 "style_class": "button-custom",
-                "custom_button_background": "#C9A84C",
+                "custom_button_background": "#c9a84c",
                 "custom_button_text": "{{ settings.color_palette.background }}",
-                "custom_button_border": "#C9A84C",
+                "custom_button_border": "#c9a84c",
                 "width": "custom",
                 "custom_width": 100,
                 "width_mobile": "fit-content",
@@ -2681,7 +2681,7 @@
         "section_height": "",
         "section_height_custom": 50,
         "background_media": "none",
-        "background_color": "#FDF6EC",
+        "background_color": "#fdf6ec",
         "video_position": "cover",
         "background_image_position": "cover",
         "toggle_overlay": false,
