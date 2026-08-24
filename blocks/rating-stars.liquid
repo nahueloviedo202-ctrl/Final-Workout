@@ -1,8 +1,12 @@
 {%- doc -%}
   Renders a 5-star product rating (with partial-star fill for decimal ratings) plus an optional
-  review-count label. Reads product.metafields.reviews.rating / rating_count — the same data
-  source used by the theme's built-in "review" block — so it works with any reviews app that
-  writes to those metafields.
+  review-count label.
+
+  Works with no reviews app installed: the rating and review count are plain, manually editable
+  settings by default. If a reviews app is connected and writes to
+  product.metafields.reviews.rating / rating_count, that data is used automatically instead —
+  the same metafields the theme's built-in "review" block reads — so the block upgrades itself
+  the moment an app is added, with nothing to reconfigure.
 
   Uses a two-layer star technique (a full row of muted stars underneath, a colored row clipped
   to the rating percentage on top) rather than the theme's `icon.liquid` star glyph, since this
@@ -13,14 +17,15 @@
 {% liquid
   assign block_settings = block.settings
   assign product = closest.product
+
   assign rating = product.metafields.reviews.rating.value.rating
   assign scale_max = product.metafields.reviews.rating.value.scale_max
   assign rating_count = product.metafields.reviews.rating_count
 
-  if request.visual_preview_mode and rating == blank
-    assign rating = 4.4
+  if rating == blank
+    assign rating = block_settings.rating
     assign scale_max = 5
-    assign rating_count = 1300
+    assign rating_count = block_settings.review_count
   endif
 
   assign scale_max = scale_max | default: 5
@@ -121,7 +126,26 @@
   "settings": [
     {
       "type": "paragraph",
-      "content": "Reads the rating from a reviews app's product.metafields.reviews.rating / rating_count. Nothing renders until a reviews app is connected."
+      "content": "Works out of the box with the rating and count below. If a reviews app is connected, its data is used automatically instead."
+    },
+    {
+      "type": "header",
+      "content": "Rating"
+    },
+    {
+      "type": "range",
+      "id": "rating",
+      "label": "Rating",
+      "min": 0,
+      "max": 5,
+      "step": 0.1,
+      "default": 4.4
+    },
+    {
+      "type": "text",
+      "id": "review_count",
+      "label": "Review count",
+      "default": "1300"
     },
     {
       "type": "header",
