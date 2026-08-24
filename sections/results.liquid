@@ -1,0 +1,279 @@
+{%- comment -%}
+  Results section.
+
+  Renders a heading/sub-text block side-by-side with a list of circular percentage stats
+  (stacked on mobile). Each stat is a `result-stat` block so merchants can add, remove, reorder
+  and edit rows from the Theme Editor. Ring size, thickness and colors are shared section
+  settings so every stat in the list stays visually consistent.
+{%- endcomment -%}
+
+{% liquid
+  if section.settings.background_color != blank
+    render 'contrast-override', background_color: section.settings.background_color, section_id: section.id
+  endif
+%}
+
+<div
+  class="section-background{% if section.settings.background_color != blank %} color-custom-{{ section.id }}{% endif %}"
+></div>
+<div
+  class="
+    section
+    section--{{ section.settings.section_width }}
+    results-section
+    spacing-style
+    {% if section.settings.background_color != blank %}color-custom-{{ section.id }}{% endif %}
+  "
+  style="{% render 'spacing-style', settings: section.settings %}"
+>
+  <div class="results-section__layout">
+    {% if section.settings.heading != blank or section.settings.subheading != blank %}
+      <div
+        class="results-section__content"
+        style="text-align: {{ section.settings.heading_alignment }};"
+      >
+        {% if section.settings.heading != blank %}
+          <h2 class="results-section__heading {{ section.settings.heading_type_preset }}">
+            {{- section.settings.heading -}}
+          </h2>
+        {% endif %}
+
+        {% if section.settings.subheading != blank %}
+          <div class="results-section__subheading rte">
+            {{ section.settings.subheading }}
+          </div>
+        {% endif %}
+      </div>
+    {% endif %}
+
+    <div class="results-section__list">
+      {% content_for 'blocks' %}
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+  .results-section__layout {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3.2rem;
+  }
+
+  .results-section__content {
+    max-width: 38rem;
+  }
+
+  .results-section__heading {
+    margin: 0;
+  }
+
+  .results-section__subheading {
+    margin-block-start: 1.2rem;
+  }
+
+  .results-section__subheading :is(p) {
+    margin: 0;
+  }
+
+  .results-section__list {
+    width: 100%;
+    max-width: 48rem;
+    display: flex;
+    flex-direction: column;
+  }
+
+  @media screen and (min-width: 750px) {
+    .results-section__layout {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      gap: 4rem;
+    }
+
+    .results-section__content {
+      flex: 1 1 40%;
+    }
+
+    .results-section__list {
+      flex: 1 1 50%;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Results",
+  "tag": "section",
+  "class": "section-results",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "blocks": [
+    {
+      "type": "result-stat"
+    }
+  ],
+  "settings": [
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Discover Our Best Recipes"
+    },
+    {
+      "type": "select",
+      "id": "heading_type_preset",
+      "label": "Heading size",
+      "options": [
+        { "value": "h1", "label": "Extra large" },
+        { "value": "h2", "label": "Large" },
+        { "value": "h3", "label": "Medium" },
+        { "value": "h4", "label": "Small" }
+      ],
+      "default": "h1"
+    },
+    {
+      "type": "text_alignment",
+      "id": "heading_alignment",
+      "label": "Heading alignment",
+      "default": "center"
+    },
+    {
+      "type": "richtext",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "<p>Explore our collection of delicious and easy-to-prepare recipes. From traditional dishes to modern creations, find the inspiration you need to surprise your family and friends in the kitchen with fresh ingredients and proven techniques.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "Width",
+      "options": [
+        { "value": "page-width", "label": "Page" },
+        { "value": "full-width", "label": "Full width" }
+      ],
+      "default": "page-width"
+    },
+    {
+      "type": "header",
+      "content": "Percentage ring"
+    },
+    {
+      "type": "range",
+      "id": "ring_size",
+      "label": "Size",
+      "min": 40,
+      "max": 140,
+      "step": 2,
+      "unit": "px",
+      "default": 70
+    },
+    {
+      "type": "range",
+      "id": "ring_thickness",
+      "label": "Thickness",
+      "min": 2,
+      "max": 16,
+      "step": 1,
+      "unit": "px",
+      "default": 7
+    },
+    {
+      "type": "color",
+      "id": "ring_color",
+      "label": "Ring color",
+      "placeholder": "Default"
+    },
+    {
+      "type": "color",
+      "id": "ring_track_color",
+      "label": "Track color",
+      "placeholder": "Default"
+    },
+    {
+      "type": "header",
+      "content": "Section background"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "placeholder": "Default"
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 36
+    }
+  ],
+  "presets": [
+    {
+      "name": "Results",
+      "category": "Storytelling",
+      "settings": {
+        "heading": "Discover Our Best Recipes",
+        "heading_type_preset": "h1",
+        "heading_alignment": "center",
+        "subheading": "<p>Explore our collection of delicious and easy-to-prepare recipes. From traditional dishes to modern creations, find the inspiration you need to surprise your family and friends in the kitchen with fresh ingredients and proven techniques.</p>",
+        "section_width": "page-width",
+        "ring_size": 70,
+        "ring_thickness": 7,
+        "padding-block-start": 36,
+        "padding-block-end": 36
+      },
+      "blocks": {
+        "stat_1": {
+          "type": "result-stat",
+          "settings": {
+            "percentage": 94,
+            "text": "<p>Our users love how these recipes transform their everyday meals from the first attempt, with simple ingredients and easy-to-follow steps.</p>"
+          }
+        },
+        "stat_2": {
+          "type": "result-stat",
+          "settings": {
+            "percentage": 97,
+            "text": "<p>More than 10,000 passionate home cooks have already discovered our recipes and never looked back. Each dish is a unique culinary experience.</p>"
+          }
+        },
+        "stat_3": {
+          "type": "result-stat",
+          "settings": {
+            "percentage": 100,
+            "text": "<p>Simple, effective, and delicious. These recipes are exactly what your kitchen has been waiting for to create memorable dishes.</p>"
+          }
+        }
+      },
+      "block_order": ["stat_1", "stat_2", "stat_3"]
+    }
+  ]
+}
+{% endschema %}
