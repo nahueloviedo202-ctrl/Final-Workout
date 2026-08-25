@@ -1,6 +1,213 @@
+{% doc %}
+  @prompt
+    HAZME LINKS DE MIS POLITICAS PERO EN LINEA QUE QUEDE BIEN CON MI FPPTER
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-policy-links-{{ ai_gen_id }} {
+    display: block;
+    width: 100%;
+  }
+
+  .ai-policy-links-container-{{ ai_gen_id }} {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: {{ block.settings.link_spacing }}px;
+    justify-content: {{ block.settings.alignment }};
+  }
+
+  .ai-policy-link-{{ ai_gen_id }} {
+    color: {{ block.settings.link_color }};
+    text-decoration: none;
+    font-size: {{ block.settings.font_size }}px;
+    transition: color 0.3s ease;
+    white-space: nowrap;
+  }
+
+  .ai-policy-link-{{ ai_gen_id }}:hover {
+    color: {{ block.settings.link_hover_color }};
+  }
+
+  .ai-policy-separator-{{ ai_gen_id }} {
+    color: {{ block.settings.separator_color }};
+    font-size: {{ block.settings.font_size }}px;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-policy-links-container-{{ ai_gen_id }} {
+      justify-content: {{ block.settings.mobile_alignment }};
+    }
+  }
+{% endstyle %}
+
+<div class="ai-policy-links-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-policy-links-container-{{ ai_gen_id }}">
+    {% if shop.privacy_policy %}
+      <a href="{{ shop.privacy_policy.url }}" class="ai-policy-link-{{ ai_gen_id }}">
+        {{ block.settings.privacy_policy_text }}
+      </a>
+      {% if shop.refund_policy or shop.terms_of_service or shop.shipping_policy %}
+        <span class="ai-policy-separator-{{ ai_gen_id }}">{{ block.settings.separator }}</span>
+      {% endif %}
+    {% endif %}
+
+    {% if shop.refund_policy %}
+      <a href="{{ shop.refund_policy.url }}" class="ai-policy-link-{{ ai_gen_id }}">
+        {{ block.settings.refund_policy_text }}
+      </a>
+      {% if shop.terms_of_service or shop.shipping_policy %}
+        <span class="ai-policy-separator-{{ ai_gen_id }}">{{ block.settings.separator }}</span>
+      {% endif %}
+    {% endif %}
+
+    {% if shop.terms_of_service %}
+      <a href="{{ shop.terms_of_service.url }}" class="ai-policy-link-{{ ai_gen_id }}">
+        {{ block.settings.terms_of_service_text }}
+      </a>
+      {% if shop.shipping_policy %}
+        <span class="ai-policy-separator-{{ ai_gen_id }}">{{ block.settings.separator }}</span>
+      {% endif %}
+    {% endif %}
+
+    {% if shop.shipping_policy %}
+      <a href="{{ shop.shipping_policy.url }}" class="ai-policy-link-{{ ai_gen_id }}">
+        {{ block.settings.shipping_policy_text }}
+      </a>
+    {% endif %}
+  </div>
+</div>
+
 {% schema %}
- {
-   "name": "AI_Block",
-   "tag": "shopify-ai-generated-block"
- }
+{
+  "name": "Policy links",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Link text"
+    },
+    {
+      "type": "text",
+      "id": "privacy_policy_text",
+      "label": "Privacy policy",
+      "default": "Privacy policy"
+    },
+    {
+      "type": "text",
+      "id": "refund_policy_text",
+      "label": "Refund policy",
+      "default": "Refund policy"
+    },
+    {
+      "type": "text",
+      "id": "terms_of_service_text",
+      "label": "Terms of service",
+      "default": "Terms of service"
+    },
+    {
+      "type": "text",
+      "id": "shipping_policy_text",
+      "label": "Shipping policy",
+      "default": "Shipping policy"
+    },
+    {
+      "type": "header",
+      "content": "Style"
+    },
+    {
+      "type": "text",
+      "id": "separator",
+      "label": "Separator",
+      "default": "|"
+    },
+    {
+      "type": "range",
+      "id": "link_spacing",
+      "label": "Link spacing",
+      "min": 4,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "font_size",
+      "label": "Font size",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "select",
+      "id": "alignment",
+      "label": "Desktop alignment",
+      "options": [
+        {
+          "value": "flex-start",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "flex-end",
+          "label": "Right"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "select",
+      "id": "mobile_alignment",
+      "label": "Mobile alignment",
+      "options": [
+        {
+          "value": "flex-start",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "flex-end",
+          "label": "Right"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "link_color",
+      "label": "Link color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "link_hover_color",
+      "label": "Link hover color",
+      "default": "#666666"
+    },
+    {
+      "type": "color",
+      "id": "separator_color",
+      "label": "Separator color",
+      "default": "#DFDFDF"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Policy links"
+    }
+  ]
+}
 {% endschema %}
