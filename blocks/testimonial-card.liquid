@@ -105,19 +105,24 @@
   {% endif %}
 
   {% if block_settings.heading != blank %}
-    <h3 class="testimonial-card__heading {{ block_settings.heading_type_preset }}">
+    <h3
+      class="testimonial-card__heading {{ block_settings.heading_type_preset }}"
+      style="font-size: var(--testimonial-card-heading-size);"
+    >
       {{- block_settings.heading -}}
     </h3>
   {% endif %}
 
   {% if block_settings.text != blank %}
-    <div class="testimonial-card__text rte">
+    <div class="testimonial-card__text rte" style="font-size: var(--testimonial-text-size);">
       {{ block_settings.text }}
     </div>
   {% endif %}
 
   {% if block_settings.author != blank %}
-    <p class="testimonial-card__author">{{ block_settings.author }}</p>
+    <p class="testimonial-card__author" style="font-size: var(--testimonial-author-size);">
+      {{- block_settings.author -}}
+    </p>
   {% endif %}
 </div>
 
@@ -142,10 +147,18 @@
     border-width: var(--border-width, 0);
     border-style: var(--border-style, none);
     border-color: var(--border-color);
+
+    --testimonial-card-heading-size: var(--testimonial-card-heading-size-mobile, 1.8rem);
+    --testimonial-text-size: var(--testimonial-text-size-mobile, 1.5rem);
+    --testimonial-author-size: var(--testimonial-author-size-mobile, 1.4rem);
   }
 
   @media screen and (min-width: 750px) {
     .testimonial-card {
+      --testimonial-card-heading-size: var(--testimonial-card-heading-size-desktop, 2rem);
+      --testimonial-text-size: var(--testimonial-text-size-desktop, 1.6rem);
+      --testimonial-author-size: var(--testimonial-author-size-desktop, 1.5rem);
+
       width: calc(
         (100% - (var(--testimonial-gap, 0px) * (var(--testimonial-columns-desktop, 3) - 1))) /
           var(--testimonial-columns-desktop, 3)
@@ -197,12 +210,10 @@
 
   .testimonial-card__heading {
     margin: 0 0 1.2rem;
-    font-size: var(--testimonial-card-heading-size-mobile, 1.8rem);
   }
 
   .testimonial-card__text {
     margin: 0;
-    font-size: var(--testimonial-text-size-mobile, 1.5rem);
   }
 
   .testimonial-card__text :is(p) {
@@ -212,21 +223,6 @@
   .testimonial-card__author {
     margin: 1.6rem 0 0;
     font-weight: 600;
-    font-size: var(--testimonial-author-size-mobile, 1.4rem);
-  }
-
-  @media screen and (min-width: 750px) {
-    .testimonial-card__heading {
-      font-size: var(--testimonial-card-heading-size-desktop, 2rem);
-    }
-
-    .testimonial-card__text {
-      font-size: var(--testimonial-text-size-desktop, 1.6rem);
-    }
-
-    .testimonial-card__author {
-      font-size: var(--testimonial-author-size-desktop, 1.5rem);
-    }
   }
 {% endstylesheet %}
 

@@ -41,7 +41,10 @@
         style="text-align: {{ section.settings.heading_alignment }};"
       >
         {% if section.settings.heading != blank %}
-          <h2 class="results-section__heading {{ section.settings.heading_type_preset }}">
+          <h2
+            class="results-section__heading {{ section.settings.heading_type_preset }}"
+            style="font-size: var(--results-heading-size);"
+          >
             {{- section.settings.heading -}}
           </h2>
         {% endif %}
@@ -70,11 +73,11 @@
 
   .results-section__content {
     max-width: 38rem;
+    --results-heading-size: var(--results-heading-size-mobile, 2.8rem);
   }
 
   .results-section__heading {
     margin: 0;
-    font-size: var(--results-heading-size-mobile, 2.8rem);
   }
 
   .results-section__subheading {
@@ -103,14 +106,11 @@
 
     .results-section__content {
       flex: 1 1 40%;
+      --results-heading-size: var(--results-heading-size-desktop, 4rem);
     }
 
     .results-section__list {
       flex: 1 1 50%;
-    }
-
-    .results-section__heading {
-      font-size: var(--results-heading-size-desktop, 4rem);
     }
 
     .results-section__subheading {
