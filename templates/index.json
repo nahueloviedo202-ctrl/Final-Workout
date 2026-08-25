@@ -1878,13 +1878,14 @@
         "comparison_table_row_irUFtT",
         "comparison_table_row_Cc4Q7L"
       ],
+      "custom_css": [],
       "name": "Comparison table",
       "settings": {
         "heading": "Why Choose The Final Workout",
         "heading_type_preset": "h2",
         "heading_alignment": "center",
         "subheading": "<p>Discover what sets The Final Workout apart from the competition. We're committed to delivering exceptional quality, outstanding customer service, and unbeatable value on every purchase.</p>",
-        "section_width": "page-width",
+        "section_width": "full-width",
         "border_radius": 32,
         "brand_column_heading": "Elyndra Insights",
         "highlighted_column_background_color": "#c9a84c",
