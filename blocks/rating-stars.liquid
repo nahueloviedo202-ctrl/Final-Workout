@@ -43,6 +43,8 @@
       --star-color: {{ block_settings.star_color | default: '#ffcc00' }};
       --star-background-color: {{ block_settings.star_background_color | default: '#ececec' }};
       --icon-size: {{ block_settings.icon_size }}px;
+      --count-size-mobile: {{ block_settings.count_font_size_mobile | default: 13 }}px;
+      --count-size-desktop: {{ block_settings.count_font_size_desktop | default: 14 }}px;
       justify-content: {{ block_settings.alignment }};
     "
     role="img"
@@ -114,8 +116,14 @@
   }
 
   .rating-stars-block__label {
-    font-size: 1.4rem;
+    font-size: var(--count-size-mobile, 1.3rem);
     color: rgb(var(--color-foreground-rgb) / var(--opacity-muted-text, 0.7));
+  }
+
+  @media screen and (min-width: 750px) {
+    .rating-stars-block__label {
+      font-size: var(--count-size-desktop, 1.4rem);
+    }
   }
 {% endstylesheet %}
 
@@ -200,6 +208,28 @@
       "label": "Review count text",
       "info": "{{ count }} is replaced with the review count",
       "default": "(+{{ count }} Reviews)",
+      "visible_if": "{{ block.settings.show_count }}"
+    },
+    {
+      "type": "range",
+      "id": "count_font_size_desktop",
+      "label": "Review count text size (desktop)",
+      "min": 10,
+      "max": 22,
+      "step": 1,
+      "unit": "px",
+      "default": 14,
+      "visible_if": "{{ block.settings.show_count }}"
+    },
+    {
+      "type": "range",
+      "id": "count_font_size_mobile",
+      "label": "Review count text size (mobile)",
+      "min": 10,
+      "max": 22,
+      "step": 1,
+      "unit": "px",
+      "default": 13,
       "visible_if": "{{ block.settings.show_count }}"
     }
   ],

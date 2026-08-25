@@ -30,6 +30,8 @@
       height: {{ ring_size }}px;
       {% if section_settings.ring_color != blank %}--ring-color: {{ section_settings.ring_color }};{% endif %}
       {% if track_color != blank %}--ring-track-color: {{ track_color }};{% endif %}
+      --ring-label-size-mobile: {{ section_settings.ring_label_font_size_mobile | default: 12 }}px;
+      --ring-label-size-desktop: {{ section_settings.ring_label_font_size_desktop | default: 13 }}px;
     "
   >
     <svg
@@ -111,18 +113,29 @@
     align-items: center;
     justify-content: center;
     margin: 0;
-    font-size: 1.3rem;
+    font-size: var(--ring-label-size-mobile, 1.2rem);
     font-weight: 600;
     color: var(--ring-color, var(--color-foreground));
   }
 
   .result-stat__text {
     flex: 1 1 auto;
+    font-size: var(--results-stat-text-size-mobile, 1.4rem);
   }
 
   .result-stat__text :is(p) {
     margin: 0;
     line-height: 1.6;
+  }
+
+  @media screen and (min-width: 750px) {
+    .result-stat__ring-label {
+      font-size: var(--ring-label-size-desktop, 1.3rem);
+    }
+
+    .result-stat__text {
+      font-size: var(--results-stat-text-size-desktop, 1.5rem);
+    }
   }
 {% endstylesheet %}
 

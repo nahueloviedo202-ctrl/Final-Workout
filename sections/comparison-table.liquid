@@ -27,7 +27,15 @@
     spacing-style
     {% if section.settings.background_color != blank %}color-custom-{{ section.id }}{% endif %}
   "
-  style="{% render 'spacing-style', settings: section.settings %}"
+  style="
+    {% render 'spacing-style', settings: section.settings %}
+    --comparison-subheading-size-mobile: {{ section.settings.subheading_font_size_mobile | default: 15 }}px;
+    --comparison-subheading-size-desktop: {{ section.settings.subheading_font_size_desktop | default: 16 }}px;
+    --comparison-cell-size-mobile: {{ section.settings.cell_font_size_mobile | default: 12 }}px;
+    --comparison-cell-size-desktop: {{ section.settings.cell_font_size_desktop | default: 14 }}px;
+    --comparison-header-size-mobile: {{ section.settings.header_font_size_mobile | default: 14 }}px;
+    --comparison-header-size-desktop: {{ section.settings.header_font_size_desktop | default: 16 }}px;
+  "
 >
   <div class="comparison-table-section__layout">
     {% if section.settings.heading != blank or section.settings.subheading != blank %}
@@ -97,6 +105,7 @@
 
   .comparison-table-section__subheading {
     margin-block-start: 1.2rem;
+    font-size: var(--comparison-subheading-size-mobile, 1.5rem);
   }
 
   .comparison-table-section__subheading :is(p) {
@@ -122,7 +131,7 @@
     padding: 1.2rem 1.6rem;
     text-align: center;
     vertical-align: middle;
-    font-size: 1.4rem;
+    font-size: var(--comparison-cell-size-desktop, 1.4rem);
     min-width: 7.5rem;
   }
 
@@ -133,7 +142,7 @@
 
   th.comparison-table__cell--highlighted,
   th.comparison-table__cell--regular {
-    font-size: 1.6rem;
+    font-size: var(--comparison-header-size-desktop, 1.6rem);
     font-weight: 600;
   }
 
@@ -180,12 +189,16 @@
     .comparison-table-section__table-wrapper {
       flex: 0 0 auto;
     }
+
+    .comparison-table-section__subheading {
+      font-size: var(--comparison-subheading-size-desktop, 1.6rem);
+    }
   }
 
   @media screen and (max-width: 749px) {
     .comparison-table__cell {
       padding: 1rem 0.8rem;
-      font-size: 1.2rem;
+      font-size: var(--comparison-cell-size-mobile, 1.2rem);
       min-width: 6rem;
     }
 
@@ -195,7 +208,7 @@
 
     th.comparison-table__cell--highlighted,
     th.comparison-table__cell--regular {
-      font-size: 1.4rem;
+      font-size: var(--comparison-header-size-mobile, 1.4rem);
     }
   }
 {% endstylesheet %}
@@ -247,6 +260,70 @@
       "id": "subheading",
       "label": "Subheading",
       "default": "<p>Discover what sets us apart from the competition. We're committed to delivering exceptional quality, outstanding customer service, and unbeatable value on every purchase.</p>"
+    },
+    {
+      "type": "range",
+      "id": "subheading_font_size_desktop",
+      "label": "Subheading size (desktop)",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "subheading_font_size_mobile",
+      "label": "Subheading size (mobile)",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "header",
+      "content": "Table text size"
+    },
+    {
+      "type": "range",
+      "id": "header_font_size_desktop",
+      "label": "Column heading size (desktop)",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "header_font_size_mobile",
+      "label": "Column heading size (mobile)",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "cell_font_size_desktop",
+      "label": "Row text size (desktop)",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "cell_font_size_mobile",
+      "label": "Row text size (mobile)",
+      "min": 9,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "default": 12
     },
     {
       "type": "header",

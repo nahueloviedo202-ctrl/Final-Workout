@@ -24,7 +24,13 @@
     spacing-style
     {% if section.settings.background_color != blank %}color-custom-{{ section.id }}{% endif %}
   "
-  style="{% render 'spacing-style', settings: section.settings %}"
+  style="
+    {% render 'spacing-style', settings: section.settings %}
+    --results-subheading-size-mobile: {{ section.settings.subheading_font_size_mobile | default: 15 }}px;
+    --results-subheading-size-desktop: {{ section.settings.subheading_font_size_desktop | default: 16 }}px;
+    --results-stat-text-size-mobile: {{ section.settings.stat_text_font_size_mobile | default: 14 }}px;
+    --results-stat-text-size-desktop: {{ section.settings.stat_text_font_size_desktop | default: 15 }}px;
+  "
 >
   <div class="results-section__layout">
     {% if section.settings.heading != blank or section.settings.subheading != blank %}
@@ -70,6 +76,7 @@
 
   .results-section__subheading {
     margin-block-start: 1.2rem;
+    font-size: var(--results-subheading-size-mobile, 1.5rem);
   }
 
   .results-section__subheading :is(p) {
@@ -97,6 +104,10 @@
 
     .results-section__list {
       flex: 1 1 50%;
+    }
+
+    .results-section__subheading {
+      font-size: var(--results-subheading-size-desktop, 1.6rem);
     }
   }
 {% endstylesheet %}
@@ -150,6 +161,46 @@
       "default": "<p>Explore our collection of delicious and easy-to-prepare recipes. From traditional dishes to modern creations, find the inspiration you need to surprise your family and friends in the kitchen with fresh ingredients and proven techniques.</p>"
     },
     {
+      "type": "range",
+      "id": "subheading_font_size_desktop",
+      "label": "Subheading size (desktop)",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "subheading_font_size_mobile",
+      "label": "Subheading size (mobile)",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "stat_text_font_size_desktop",
+      "label": "Stat text size (desktop)",
+      "min": 10,
+      "max": 22,
+      "step": 1,
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "stat_text_font_size_mobile",
+      "label": "Stat text size (mobile)",
+      "min": 10,
+      "max": 22,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
       "type": "header",
       "content": "Layout"
     },
@@ -198,6 +249,26 @@
       "id": "ring_track_color",
       "label": "Track color",
       "placeholder": "Default"
+    },
+    {
+      "type": "range",
+      "id": "ring_label_font_size_desktop",
+      "label": "Percentage label size (desktop)",
+      "min": 8,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 13
+    },
+    {
+      "type": "range",
+      "id": "ring_label_font_size_mobile",
+      "label": "Percentage label size (mobile)",
+      "min": 8,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 12
     },
     {
       "type": "header",
