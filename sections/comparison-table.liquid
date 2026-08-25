@@ -120,15 +120,17 @@
 
   .comparison-table-section__table-wrapper {
     max-width: 100%;
+    display: flex;
+    justify-content: center;
     overflow-x: auto;
     overflow-y: visible;
     padding-block: 1.2rem;
   }
 
   .comparison-table {
+    flex-shrink: 0;
     border-collapse: separate;
     border-spacing: 0;
-    margin-inline: auto;
   }
 
   .comparison-table__cell {
@@ -204,13 +206,13 @@
 
   @media screen and (max-width: 749px) {
     .comparison-table__cell {
-      padding: 1rem 0.8rem;
+      padding: 0.8rem 0.6rem;
       font-size: var(--comparison-cell-size-mobile, 1.2rem);
-      min-width: 6rem;
+      min-width: 5rem;
     }
 
     .comparison-table__cell--label {
-      min-width: 10rem;
+      min-width: 8.5rem;
     }
 
     th.comparison-table__cell--highlighted,
