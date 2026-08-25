@@ -32,6 +32,8 @@
   data-carousel-card
   style="
     {% render 'border-override', settings: section_settings %}
+    --card-padding-block: {{ section_settings.card_padding_block | default: 20 }}px;
+    --card-padding-inline: {{ section_settings.card_padding_inline | default: 20 }}px;
     --testimonial-card-heading-size-mobile: {{ block_settings.heading_font_size_mobile | default: 18 }}px;
     --testimonial-card-heading-size-desktop: {{ block_settings.heading_font_size_desktop | default: 20 }}px;
     --testimonial-text-size-mobile: {{ section_settings.text_font_size_mobile | default: 15 }}px;
@@ -132,9 +134,6 @@
 
 {% stylesheet %}
   .testimonial-card {
-    --card-padding-block: 3.2rem;
-    --card-padding-inline: 3rem;
-
     position: relative;
     display: flex;
     flex-direction: column;
@@ -145,7 +144,7 @@
         var(--testimonial-columns-mobile, 1)
     );
     text-align: center;
-    padding: var(--card-padding-block) var(--card-padding-inline);
+    padding: var(--card-padding-block, 20px) var(--card-padding-inline, 20px);
     background-color: var(--color-background);
     color: var(--color, var(--color-foreground));
     border-radius: var(--border-radius, 0);
@@ -202,8 +201,8 @@
 
   .testimonial-card__quote-icon {
     position: absolute;
-    top: var(--card-padding-block);
-    right: var(--card-padding-inline);
+    top: var(--card-padding-block, 20px);
+    right: var(--card-padding-inline, 20px);
     width: var(--quote-icon-size-mobile, 2.4rem);
     height: var(--quote-icon-size-mobile, 2.4rem);
     color: rgb(var(--color-foreground-rgb) / var(--opacity-muted-text, 0.3));
