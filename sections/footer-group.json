@@ -434,65 +434,11 @@
                   },
                   "blocks": {}
                 },
-                "text_M6q8Uj": {
-                  "type": "text",
-                  "name": "t:names.text",
-                  "settings": {
-                    "text": "<p>117 South Lexington Street Ste 100</p>",
-                    "width": "fit-content",
-                    "max_width": "normal",
-                    "alignment": "left",
-                    "type_preset": "rte",
-                    "font": "var(--font-body--family)",
-                    "font_size": "1rem",
-                    "font_size_mobile": "",
-                    "line_height": "normal",
-                    "letter_spacing": "normal",
-                    "case": "none",
-                    "wrap": "pretty",
-                    "text_color": "{{ settings.color_palette.background }}",
-                    "background": false,
-                    "background_color": "#00000026",
-                    "corner_radius": 0,
-                    "padding-block-start": 0,
-                    "padding-block-end": 0,
-                    "padding-inline-start": 0,
-                    "padding-inline-end": 0
-                  },
-                  "blocks": {}
-                },
-                "text_dwWbhR": {
-                  "type": "text",
-                  "name": "t:names.text",
-                  "settings": {
-                    "text": "<p>Harrisonville, MO 64701</p>",
-                    "width": "fit-content",
-                    "max_width": "normal",
-                    "alignment": "left",
-                    "type_preset": "rte",
-                    "font": "var(--font-body--family)",
-                    "font_size": "1rem",
-                    "font_size_mobile": "",
-                    "line_height": "normal",
-                    "letter_spacing": "normal",
-                    "case": "none",
-                    "wrap": "pretty",
-                    "text_color": "{{ settings.color_palette.background }}",
-                    "background": false,
-                    "background_color": "#00000026",
-                    "corner_radius": 0,
-                    "padding-block-start": 0,
-                    "padding-block-end": 0,
-                    "padding-inline-start": 0,
-                    "padding-inline-end": 0
-                  },
-                  "blocks": {}
-                },
                 "text_X9j9fa": {
                   "type": "text",
                   "name": "t:names.text",
                   "settings": {
-                    "text": "<p>United States</p>",
+                    "text": "<p>30 N. Gould St. Ste R, Sheridan, WY 82801</p>",
                     "width": "fit-content",
                     "max_width": "normal",
                     "alignment": "left",
@@ -518,8 +464,6 @@
               },
               "block_order": [
                 "text_Hgxzp9",
-                "text_M6q8Uj",
-                "text_dwWbhR",
                 "text_X9j9fa"
               ]
             },
@@ -721,7 +665,7 @@
                   "type": "text",
                   "name": "t:names.text",
                   "settings": {
-                    "text": "<p>Email: contact@ElyndraInsights.com</p>",
+                    "text": "<p>Email: contact@elyndrainsights.com</p>",
                     "width": "fit-content",
                     "max_width": "normal",
                     "alignment": "left",
