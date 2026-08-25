@@ -1907,7 +1907,7 @@
         "header_font_size_mobile": 14,
         "cell_font_size_desktop": 14,
         "cell_font_size_mobile": 14,
-        "section_width": "full-width",
+        "section_width": "page-width",
         "border_radius": 32,
         "brand_column_heading": "Elyndra Insights",
         "highlighted_column_background_color": "#c9a84c",
