@@ -49,6 +49,12 @@
       --color: {{ block_settings.text_color }};
       --color-rgb: {{ block_settings.text_color.rgb }};
     {% endif %}
+    {% if block_settings.sale_price_color != blank %}
+      --price-color: {{ block_settings.sale_price_color }};
+    {% endif %}
+    {% if block_settings.compare_price_color != blank %}
+      --compare-price-color: {{ block_settings.compare_price_color }};
+    {% endif %}
     --width: {{ block_settings.width }};
   "
   {{ block.shopify_attributes }}
@@ -91,6 +97,20 @@
 </product-price>
 
 {% render 'payment-terms-styles' %}
+
+{% stylesheet %}
+  /* Higher specificity than the shared `.price` / `.compare-at-price` rules in
+     price-styles.liquid (element + class beats a lone class), so these only take
+     effect once the corresponding setting is set — otherwise both still inherit
+     the shared default styling untouched. */
+  product-price .price {
+    color: var(--price-color, inherit);
+  }
+
+  product-price .compare-at-price {
+    color: var(--compare-price-color, rgb(var(--color-rgb, var(--color-foreground-rgb)) / var(--opacity-subdued-text)));
+  }
+{% endstylesheet %}
 
 {% schema %}
 {
@@ -364,6 +384,20 @@
       "id": "text_color",
       "label": "t:settings.text_color",
       "placeholder": "t:settings.default"
+    },
+    {
+      "type": "color",
+      "id": "sale_price_color",
+      "label": "Sale price color",
+      "placeholder": "Default",
+      "info": "The current/discounted price."
+    },
+    {
+      "type": "color",
+      "id": "compare_price_color",
+      "label": "Compare-at price color",
+      "placeholder": "Default",
+      "info": "The struck-through original price."
     },
     {
       "type": "header",
