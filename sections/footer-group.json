@@ -935,8 +935,26 @@
                 "padding-inline-end": 0
               },
               "blocks": {
+                "ai_gen_block_e3eb87d_GzgXh7": {
+                  "type": "ai_gen_block_e3eb87d",
+                  "settings": {
+                    "menu": "politicies",
+                    "desktop_width_percent": 100,
+                    "alignment": "flex-start",
+                    "mobile_alignment": "center",
+                    "link_spacing": 16,
+                    "show_separator": true,
+                    "separator_text": "|",
+                    "separator_color": "#DFDFDF",
+                    "font_size": 14,
+                    "link_color": "{{ settings.color_palette.background }}",
+                    "link_hover_color": "#333333"
+                  },
+                  "blocks": {}
+                },
                 "ai_gen_block_6f65a7e_cmWgzi": {
                   "type": "ai_gen_block_6f65a7e",
+                  "disabled": true,
                   "settings": {
                     "privacy_policy_text": "Privacy policy",
                     "refund_policy_text": "Refund policy",
@@ -982,6 +1000,7 @@
                 }
               },
               "block_order": [
+                "ai_gen_block_e3eb87d_GzgXh7",
                 "ai_gen_block_6f65a7e_cmWgzi",
                 "text_6XE8tQ"
               ]
