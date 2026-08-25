@@ -1441,6 +1441,8 @@
         "star_background_color": "#ffcc00",
         "show_quote_icon": true,
         "quote_icon_color": "#ae2828",
+        "quote_icon_size_desktop": 30,
+        "quote_icon_size_mobile": 24,
         "card_background_color": "#f2e7d6",
         "card_text_color": "",
         "border_radius": 20,
