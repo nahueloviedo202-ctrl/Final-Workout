@@ -197,7 +197,14 @@
         <nav
           class="menu-list"
           aria-label="{{ 'accessibility.header_navigation_label' | t }}"
-          style="{% render 'menu-font-styles', settings: block_settings, menu_type: 'mega_menu' %}"
+          style="
+            {% render 'menu-font-styles', settings: block_settings, menu_type: 'mega_menu' %}
+            {% if block_settings.link_background_color != blank %}--menu-link-background-color: {{ block_settings.link_background_color }};{% endif %}
+            {% if block_settings.link_background_color_hover != blank %}--menu-link-background-color-hover: {{ block_settings.link_background_color_hover }};{% endif %}
+            {% if block_settings.link_background_color_active != blank %}--menu-link-background-color-active: {{ block_settings.link_background_color_active }};{% endif %}
+            --menu-link-background-radius: {{ block_settings.link_background_radius | default: 0 }}px;
+            --menu-link-background-padding-block: {{ block_settings.link_background_padding_block | default: 0 }}px;
+          "
         >
           {% assign class = 'overflow-menu' | append: background_color_classes %}
           {% render 'overflow-list',
@@ -398,7 +405,24 @@
 
   .menu-list__link-title {
     padding-inline: var(--gap-sm);
+    padding-block: var(--menu-link-background-padding-block, 0px);
+    border-radius: var(--menu-link-background-radius, 0px);
+    background-color: var(--menu-link-background-color, transparent);
+    transition: background-color var(--animation-speed) var(--animation-easing);
   }
+
+  /* Mirrors the high-specificity text-color rules above, targeting the same
+     three states (hover, active, more/overflow expanded) with a background
+     instead of a color override. */
+  .menu-list:not(:has(.menu-list__list-item:hover)) .menu-list__link--active .menu-list__link-title {
+    background-color: var(--menu-link-background-color-active, var(--menu-link-background-color, transparent));
+  }
+
+  .menu-list .menu-list__list-item:where(:hover, :focus-within) .menu-list__link-title,
+  .menu-list .menu-list__list-item:is([slot='more'], [slot='overflow']):has([aria-expanded='true']) .menu-list__link-title {
+    background-color: var(--menu-link-background-color-hover, var(--menu-link-background-color, transparent));
+  }
+
   [slot='overflow'] .menu-list__link-title {
     padding-inline: 0;
   }
@@ -842,6 +866,48 @@
       "id": "text_color",
       "label": "t:settings.text_color",
       "placeholder": "t:settings.default"
+    },
+    {
+      "type": "header",
+      "content": "Link background"
+    },
+    {
+      "type": "color",
+      "id": "link_background_color",
+      "label": "Background color",
+      "placeholder": "None"
+    },
+    {
+      "type": "color",
+      "id": "link_background_color_hover",
+      "label": "Background color (hover)",
+      "placeholder": "None"
+    },
+    {
+      "type": "color",
+      "id": "link_background_color_active",
+      "label": "Background color (current page)",
+      "placeholder": "None"
+    },
+    {
+      "type": "range",
+      "id": "link_background_radius",
+      "label": "Corner radius",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "link_background_padding_block",
+      "label": "Vertical padding",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 6
     },
     {
       "type": "header",
