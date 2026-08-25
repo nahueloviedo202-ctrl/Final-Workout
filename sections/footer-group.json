@@ -766,7 +766,7 @@
                   "type": "text",
                   "name": "t:names.text",
                   "settings": {
-                    "text": "<p>Elyndra Insights MARKETING LLC</p>",
+                    "text": "<p>Elyndra Insights LLC</p>",
                     "width": "fit-content",
                     "max_width": "normal",
                     "alignment": "left",
