@@ -942,11 +942,11 @@
                     "desktop_width_percent": 100,
                     "alignment": "flex-start",
                     "mobile_alignment": "center",
-                    "link_spacing": 16,
+                    "link_spacing": 12,
                     "show_separator": true,
                     "separator_text": "|",
                     "separator_color": "#DFDFDF",
-                    "font_size": 14,
+                    "font_size": 13,
                     "link_color": "{{ settings.color_palette.background }}",
                     "link_hover_color": "#333333"
                   },
