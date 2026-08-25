@@ -1921,7 +1921,9 @@
         "cross_background_color": "#f2e7d6",
         "background_color": "#fdf6ec",
         "padding-block-start": 60,
-        "padding-block-end": 36
+        "padding-block-end": 36,
+        "padding-inline-start": 20,
+        "padding-inline-end": 20
       }
     },
     "section_QiLNme": {
