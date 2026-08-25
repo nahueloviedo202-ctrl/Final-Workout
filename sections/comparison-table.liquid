@@ -29,6 +29,8 @@
   "
   style="
     {% render 'spacing-style', settings: section.settings %}
+    --comparison-heading-size-mobile: {{ section.settings.heading_font_size_mobile | default: 28 }}px;
+    --comparison-heading-size-desktop: {{ section.settings.heading_font_size_desktop | default: 40 }}px;
     --comparison-subheading-size-mobile: {{ section.settings.subheading_font_size_mobile | default: 15 }}px;
     --comparison-subheading-size-desktop: {{ section.settings.subheading_font_size_desktop | default: 16 }}px;
     --comparison-cell-size-mobile: {{ section.settings.cell_font_size_mobile | default: 12 }}px;
@@ -101,6 +103,7 @@
 
   .comparison-table-section__heading {
     margin: 0;
+    font-size: var(--comparison-heading-size-mobile, 2.8rem);
   }
 
   .comparison-table-section__subheading {
@@ -190,6 +193,10 @@
       flex: 0 0 auto;
     }
 
+    .comparison-table-section__heading {
+      font-size: var(--comparison-heading-size-desktop, 4rem);
+    }
+
     .comparison-table-section__subheading {
       font-size: var(--comparison-subheading-size-desktop, 1.6rem);
     }
@@ -248,6 +255,26 @@
         { "value": "h4", "label": "Small" }
       ],
       "default": "h1"
+    },
+    {
+      "type": "range",
+      "id": "heading_font_size_desktop",
+      "label": "Heading size (desktop)",
+      "min": 20,
+      "max": 64,
+      "step": 1,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "heading_font_size_mobile",
+      "label": "Heading size (mobile)",
+      "min": 16,
+      "max": 48,
+      "step": 1,
+      "unit": "px",
+      "default": 28
     },
     {
       "type": "text_alignment",
