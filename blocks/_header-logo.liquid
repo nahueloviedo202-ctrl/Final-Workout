@@ -39,6 +39,8 @@
     --font-family: var(--font-body--family);
     --font-style: var(--font-body--style);
     --font-weight: 600;
+    {% if block_settings.fallback_font_size_desktop != blank %}--header-logo-fallback-size-desktop: {{ block_settings.fallback_font_size_desktop }}px;{% endif %}
+    {% if block_settings.fallback_font_size_mobile != blank %}--header-logo-fallback-size-mobile: {{ block_settings.fallback_font_size_mobile }}px;{% endif %}
   "
   {{ block.shopify_attributes }}
 >
@@ -86,7 +88,7 @@
   .header-logo {
     display: flex;
     height: 100%;
-    font-size: var(--font-size--md);
+    font-size: var(--header-logo-fallback-size-mobile, var(--font-size--md));
     font-family: var(--font-family);
     font-weight: var(--font-weight);
     font-style: var(--font-style);
@@ -113,6 +115,7 @@
 
     @media screen and (min-width: 750px) {
       flex-shrink: 0;
+      font-size: var(--header-logo-fallback-size-desktop, var(--font-size--md));
     }
 
     &:hover {
@@ -159,6 +162,34 @@
       "id": "hide_logo_on_home_page",
       "label": "t:settings.hide_logo_on_home_page",
       "info": "t:info.hide_logo_on_home_page_help"
+    },
+    {
+      "type": "header",
+      "content": "Fallback text size"
+    },
+    {
+      "type": "paragraph",
+      "content": "Only used when no logo image is uploaded in Theme Settings (shows the shop name as text instead)."
+    },
+    {
+      "type": "range",
+      "id": "fallback_font_size_desktop",
+      "label": "Size (desktop)",
+      "min": 10,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "fallback_font_size_mobile",
+      "label": "Size (mobile)",
+      "min": 10,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "default": 14
     },
     {
       "type": "header",

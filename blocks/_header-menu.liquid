@@ -199,6 +199,7 @@
           aria-label="{{ 'accessibility.header_navigation_label' | t }}"
           style="
             {% render 'menu-font-styles', settings: block_settings, menu_type: 'mega_menu' %}
+            --menu-top-level-font-size: {{ block_settings.type_font_primary_size_mobile | default: '0.875rem' }};
             {% if block_settings.link_background_color != blank %}--menu-link-background-color: {{ block_settings.link_background_color }};{% endif %}
             {% if block_settings.link_background_color_hover != blank %}--menu-link-background-color-hover: {{ block_settings.link_background_color_hover }};{% endif %}
             {% if block_settings.link_background_color_active != blank %}--menu-link-background-color-active: {{ block_settings.link_background_color_active }};{% endif %}
@@ -940,6 +941,34 @@
         }
       ],
       "default": "1rem"
+    },
+    {
+      "type": "select",
+      "id": "type_font_primary_size_mobile",
+      "label": "Top level size (mobile)",
+      "options": [
+        {
+          "value": "0.625rem",
+          "label": "10px"
+        },
+        {
+          "value": "0.75rem",
+          "label": "12px"
+        },
+        {
+          "value": "0.875rem",
+          "label": "14px"
+        },
+        {
+          "value": "1rem",
+          "label": "16px"
+        },
+        {
+          "value": "1.125rem",
+          "label": "18px"
+        }
+      ],
+      "default": "0.875rem"
     },
     {
       "type": "select",

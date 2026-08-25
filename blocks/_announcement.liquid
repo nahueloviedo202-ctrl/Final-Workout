@@ -18,6 +18,7 @@
       custom-typography
       {% if block_settings.font_size != "" %}custom-font-size{% endif %}
       {% if block_settings.weight != "" %}custom-font-weight{% endif %}
+      {% if block_settings.font_size_mobile != blank %}announcement--mobile-size{% endif %}
     "
     style="
       {% render 'typography-style', settings: block_settings, preset: 'custom' %}
@@ -25,6 +26,7 @@
       --width: 100%;
       --text-align: center;
       --line-height: 1;
+      {% if block_settings.font_size_mobile != blank %}--announcement-mobile-font-size: {{ block_settings.font_size_mobile }};{% endif %}
     "
     {{ block.shopify_attributes }}
     aria-hidden="{% if block_index == 0 %}false{% else %}true{% endif %}"
@@ -45,6 +47,16 @@
     {% endif %}
   </slideshow-slide>
 {%- endunless -%}
+
+{% stylesheet %}
+  /* `!important` needed to beat `.custom-font-size` (the shared custom-typography rule)
+     regardless of source order. Only matches when "Size (mobile)" is set. */
+  @media screen and (max-width: 749px) {
+    .announcement--mobile-size {
+      font-size: var(--announcement-mobile-font-size) !important;
+    }
+  }
+{% endstylesheet %}
 
 {% schema %}
 {
@@ -165,6 +177,47 @@
         }
       ],
       "default": "1rem"
+    },
+    {
+      "type": "select",
+      "id": "font_size_mobile",
+      "label": "Size (mobile)",
+      "info": "Overrides the size on mobile only. Leave on Default to keep the desktop size everywhere.",
+      "options": [
+        {
+          "value": "",
+          "label": "t:options.default"
+        },
+        {
+          "value": "0.625rem",
+          "label": "10px"
+        },
+        {
+          "value": "0.75rem",
+          "label": "12px"
+        },
+        {
+          "value": "0.875rem",
+          "label": "14px"
+        },
+        {
+          "value": "1rem",
+          "label": "16px"
+        },
+        {
+          "value": "1.125rem",
+          "label": "18px"
+        },
+        {
+          "value": "1.25rem",
+          "label": "20px"
+        },
+        {
+          "value": "1.5rem",
+          "label": "24px"
+        }
+      ],
+      "default": ""
     },
     {
       "type": "select",
