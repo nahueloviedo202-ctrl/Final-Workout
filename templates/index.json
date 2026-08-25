@@ -422,6 +422,8 @@
             "dividers": true,
             "divider_color": "#b6b4b4",
             "type_preset": "paragraph",
+            "limit_width_desktop": true,
+            "max_width_desktop": 800,
             "background_color": "",
             "text_color": "",
             "border": "none",
