@@ -16,7 +16,7 @@
       "name": "Shape divider",
       "settings": {
         "height": 80,
-        "shape_color": "#E28B8B",
+        "shape_color": "#e28b8b",
         "flip": false,
         "animate": true,
         "animation_speed": 1,
@@ -638,7 +638,7 @@
                   "type": "text",
                   "name": "t:names.text",
                   "settings": {
-                    "text": "<p>Phone: +1 (619) 320-7015</p>",
+                    "text": "<p>Phone: +1 (332) 777-4024</p>",
                     "width": "fit-content",
                     "max_width": "normal",
                     "alignment": "left",
@@ -988,7 +988,7 @@
       "settings": {
         "section_width": "page-width",
         "gap": 20,
-        "background_color": "#E28B8B",
+        "background_color": "#e28b8b",
         "padding-block-start": 30,
         "padding-block-end": 30
       }
