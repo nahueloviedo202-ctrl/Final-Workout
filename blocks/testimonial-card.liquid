@@ -15,6 +15,9 @@
   if section_settings.card_background_color != blank
     assign card_class = card_class | append: ' color-custom-' | append: block.id
   endif
+
+  assign rating_icon_image = section_settings.rating_icon_image
+  assign rating_icon = section_settings.rating_icon | default: 'star'
 %}
 
 {% liquid
@@ -33,19 +36,49 @@
   {% if block_settings.show_rating %}
     <div
       class="testimonial-card__stars"
-      style="--star-color: {{ section_settings.star_color | default: '#ffcc00' }}; --star-background-color: {{ section_settings.star_background_color | default: '#ececec' }};"
+      style="
+        --star-color: {{ section_settings.star_color | default: '#ffcc00' }};
+        --star-background-color: {{ section_settings.star_background_color | default: '#ececec' }};
+        --star-size: {{ section_settings.rating_icon_size | default: 18 }}px;
+      "
       role="img"
       aria-label="{{ block_settings.rating }} out of 5 stars"
     >
       {% for i in (1..5) %}
-        <svg
-          class="testimonial-card__star{% if i <= block_settings.rating %} testimonial-card__star--filled{% endif %}"
-          viewBox="0 0 20 20"
-          aria-hidden="true"
-          focusable="false"
-        >
-          {%- render 'icon', icon: 'star' -%}
-        </svg>
+        {% liquid
+          assign is_filled = false
+          if i <= block_settings.rating
+            assign is_filled = true
+          endif
+        %}
+        {% if rating_icon_image != blank %}
+          {% liquid
+            assign star_image_class = 'testimonial-card__star-image'
+            if is_filled
+              assign star_image_class = star_image_class | append: ' testimonial-card__star-image--filled'
+            endif
+          %}
+          {{
+            rating_icon_image
+            | image_url: width: 128
+            | image_tag: loading: 'lazy', alt: '', class: star_image_class
+          }}
+        {% else %}
+          {% liquid
+            assign star_class = 'testimonial-card__star'
+            if is_filled
+              assign star_class = star_class | append: ' testimonial-card__star--filled'
+            endif
+          %}
+          <svg
+            class="{{ star_class }}"
+            viewBox="0 0 20 20"
+            aria-hidden="true"
+            focusable="false"
+          >
+            {%- render 'icon', icon: rating_icon -%}
+          </svg>
+        {% endif %}
       {% endfor %}
     </div>
   {% endif %}
@@ -121,13 +154,24 @@
   }
 
   .testimonial-card__star {
-    width: 1.8rem;
-    height: 1.8rem;
+    width: var(--star-size, 1.8rem);
+    height: var(--star-size, 1.8rem);
     fill: var(--star-background-color, #ececec);
   }
 
   .testimonial-card__star--filled {
     fill: var(--star-color, #ffcc00);
+  }
+
+  .testimonial-card__star-image {
+    width: var(--star-size, 1.8rem);
+    height: var(--star-size, 1.8rem);
+    object-fit: contain;
+    opacity: 0.35;
+  }
+
+  .testimonial-card__star-image--filled {
+    opacity: 1;
   }
 
   .testimonial-card__quote-icon {
