@@ -9,7 +9,7 @@
 %}
 
 <div
-  class="accordion accordion--{{ block.id }} accordion--{{ block_settings.icon }} border-style spacing-style{% if block_settings.background_color != blank or block_settings.text_color != blank %} color-custom-{{ block.id }}{% endif %}{% if block_settings.background_color != blank %} accordion--custom-background{% endif %}{% if block_settings.dividers %} accordion--dividers{% endif %}"
+  class="accordion accordion--{{ block.id }} accordion--{{ block_settings.icon }} border-style spacing-style{% if block_settings.background_color != blank or block_settings.text_color != blank %} color-custom-{{ block.id }}{% endif %}{% if block_settings.background_color != blank %} accordion--custom-background{% endif %}{% if block_settings.dividers %} accordion--dividers{% endif %}{% if block_settings.limit_width_desktop %} accordion--limit-width-desktop{% endif %}"
   style="
     --summary-font-family: var(--font-{{ block_settings.type_preset }}--family);
      --summary-font-style: var(--font-{{ block_settings.type_preset }}--style);
@@ -20,6 +20,7 @@
     {% render 'spacing-style', settings: block_settings %}
     {% render 'border-override', settings: block_settings %}
     {% if block_settings.divider_color != blank %} --color-border: {{ block_settings.divider_color }};{% endif %}
+    {% if block_settings.limit_width_desktop %} --accordion-max-width-desktop: {{ block_settings.max_width_desktop }}px;{% endif %}
   "
   {{ block.shopify_attributes }}
 >
@@ -27,6 +28,15 @@
 </div>
 
 {% render 'accordion-styles' %}
+
+{% stylesheet %}
+  @media screen and (min-width: 750px) {
+    .accordion--limit-width-desktop {
+      max-width: var(--accordion-max-width-desktop, none);
+      margin-inline: auto;
+    }
+  }
+{% endstylesheet %}
 
 {% schema %}
 {
@@ -108,6 +118,27 @@
       ],
       "default": "h6",
       "info": "t:info.edit_presets_in_theme_settings"
+    },
+    {
+      "type": "header",
+      "content": "Width"
+    },
+    {
+      "type": "checkbox",
+      "id": "limit_width_desktop",
+      "label": "Limit width on desktop",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "max_width_desktop",
+      "label": "Max width (desktop)",
+      "min": 200,
+      "max": 1200,
+      "step": 20,
+      "unit": "px",
+      "default": 800,
+      "visible_if": "{{ block.settings.limit_width_desktop }}"
     },
     {
       "type": "header",
