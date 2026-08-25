@@ -17,7 +17,7 @@
         "announcement_BxgCk9": {
           "type": "_announcement",
           "settings": {
-            "text": "⚡ Get your files at once — Instant digital delivery",
+            "text": "Get your files at once — Instant digital delivery",
             "link": "",
             "font": "var(--font-subheading--family)",
             "font_size": "1.25rem",
@@ -68,7 +68,7 @@
             "text_color": "",
             "link_background_color": "",
             "link_background_color_hover": "",
-            "link_background_color_active": "#E28B8B",
+            "link_background_color_active": "#e28b8b",
             "link_background_radius": 10,
             "link_background_padding_block": 6,
             "type_font_primary_size": "0.875rem",
