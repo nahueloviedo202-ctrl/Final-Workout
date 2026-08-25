@@ -1,0 +1,195 @@
+{% doc %}
+  @prompt
+    GENERAME EN UN LINEA RECTA LOS LINKS DE MI MENU :POLITICIES
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-menu-links-{{ ai_gen_id }} {
+    display: block;
+    width: {{ block.settings.desktop_width_percent }}%;
+    max-width: 100%;
+  }
+
+  .ai-menu-links__container-{{ ai_gen_id }} {
+    display: flex;
+    flex-wrap: wrap;
+    gap: {{ block.settings.link_spacing }}px;
+    align-items: center;
+    justify-content: {{ block.settings.alignment }};
+  }
+
+  .ai-menu-links__link-{{ ai_gen_id }} {
+    color: {{ block.settings.link_color }};
+    text-decoration: none;
+    font-size: {{ block.settings.font_size }}px;
+    transition: color 0.3s ease;
+    white-space: nowrap;
+  }
+
+  .ai-menu-links__link-{{ ai_gen_id }}:hover {
+    color: {{ block.settings.link_hover_color }};
+  }
+
+  .ai-menu-links__separator-{{ ai_gen_id }} {
+    color: {{ block.settings.separator_color }};
+    font-size: {{ block.settings.font_size }}px;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-menu-links__container-{{ ai_gen_id }} {
+      justify-content: {{ block.settings.mobile_alignment }};
+    }
+  }
+{% endstyle %}
+
+<div class="ai-menu-links-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <nav class="ai-menu-links__container-{{ ai_gen_id }}">
+    {% if block.settings.menu != blank %}
+      {% for link in block.settings.menu.links %}
+        <a href="{{ link.url }}" class="ai-menu-links__link-{{ ai_gen_id }}">
+          {{ link.title }}
+        </a>
+        {% unless forloop.last %}
+          {% if block.settings.show_separator %}
+            <span class="ai-menu-links__separator-{{ ai_gen_id }}">{{ block.settings.separator_text }}</span>
+          {% endif %}
+        {% endunless %}
+      {% endfor %}
+    {% else %}
+      <div class="ai-menu-links__link-{{ ai_gen_id }}">
+        Next, select a menu
+      </div>
+    {% endif %}
+  </nav>
+</div>
+
+{% schema %}
+{
+  "name": "Menu links horizontal",
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Menu"
+    },
+    {
+      "type": "range",
+      "id": "desktop_width_percent",
+      "label": "Desktop width",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "alignment",
+      "label": "Desktop alignment",
+      "options": [
+        {
+          "value": "flex-start",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "flex-end",
+          "label": "Right"
+        }
+      ],
+      "default": "flex-start"
+    },
+    {
+      "type": "select",
+      "id": "mobile_alignment",
+      "label": "Mobile alignment",
+      "options": [
+        {
+          "value": "flex-start",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "flex-end",
+          "label": "Right"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "range",
+      "id": "link_spacing",
+      "label": "Link spacing",
+      "min": 4,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Separator"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_separator",
+      "label": "Show separator",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "separator_text",
+      "label": "Separator text",
+      "default": "|"
+    },
+    {
+      "type": "color",
+      "id": "separator_color",
+      "label": "Separator color",
+      "default": "#DFDFDF"
+    },
+    {
+      "type": "header",
+      "content": "Style"
+    },
+    {
+      "type": "range",
+      "id": "font_size",
+      "label": "Font size",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "color",
+      "id": "link_color",
+      "label": "Link color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "link_hover_color",
+      "label": "Link hover color",
+      "default": "#333333"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Menu links horizontal"
+    }
+  ]
+}
+{% endschema %}
