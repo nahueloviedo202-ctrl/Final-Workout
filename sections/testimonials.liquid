@@ -440,6 +440,28 @@
       "visible_if": "{{ section.settings.show_quote_icon }}"
     },
     {
+      "type": "range",
+      "id": "quote_icon_size_desktop",
+      "label": "Quote icon size (desktop)",
+      "min": 12,
+      "max": 64,
+      "step": 1,
+      "unit": "px",
+      "default": 32,
+      "visible_if": "{{ section.settings.show_quote_icon }}"
+    },
+    {
+      "type": "range",
+      "id": "quote_icon_size_mobile",
+      "label": "Quote icon size (mobile)",
+      "min": 12,
+      "max": 56,
+      "step": 1,
+      "unit": "px",
+      "default": 24,
+      "visible_if": "{{ section.settings.show_quote_icon }}"
+    },
+    {
       "type": "header",
       "content": "Card"
     },

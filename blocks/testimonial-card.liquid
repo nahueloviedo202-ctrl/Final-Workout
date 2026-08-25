@@ -94,7 +94,11 @@
   {% if section_settings.show_quote_icon %}
     <div
       class="testimonial-card__quote-icon"
-      style="{% if section_settings.quote_icon_color != blank %}color: {{ section_settings.quote_icon_color }};{% endif %}"
+      style="
+        {% if section_settings.quote_icon_color != blank %}color: {{ section_settings.quote_icon_color }};{% endif %}
+        --quote-icon-size-mobile: {{ section_settings.quote_icon_size_mobile | default: 24 }}px;
+        --quote-icon-size-desktop: {{ section_settings.quote_icon_size_desktop | default: 32 }}px;
+      "
       aria-hidden="true"
     >
       <svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
@@ -131,6 +135,7 @@
     --card-padding-block: 3.2rem;
     --card-padding-inline: 3rem;
 
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -196,10 +201,19 @@
   }
 
   .testimonial-card__quote-icon {
-    width: 3.2rem;
-    height: 3.2rem;
-    margin-block-end: 1.6rem;
+    position: absolute;
+    top: var(--card-padding-block);
+    right: var(--card-padding-inline);
+    width: var(--quote-icon-size-mobile, 2.4rem);
+    height: var(--quote-icon-size-mobile, 2.4rem);
     color: rgb(var(--color-foreground-rgb) / var(--opacity-muted-text, 0.3));
+  }
+
+  @media screen and (min-width: 750px) {
+    .testimonial-card__quote-icon {
+      width: var(--quote-icon-size-desktop, 3.2rem);
+      height: var(--quote-icon-size-desktop, 3.2rem);
+    }
   }
 
   .testimonial-card__quote-icon svg {
