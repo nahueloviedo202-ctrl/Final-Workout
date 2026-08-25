@@ -164,7 +164,9 @@
                     "star_background_color": "#ececec",
                     "alignment": "flex-start",
                     "show_count": true,
-                    "count_format": "(+1300 Reviews)"
+                    "count_format": "(+1300 Reviews)",
+                    "count_font_size_desktop": 14,
+                    "count_font_size_mobile": 13
                   },
                   "blocks": {}
                 },
@@ -182,7 +184,9 @@
                     "line_height": "normal",
                     "letter_spacing": "normal",
                     "case": "none",
-                    "text_color": "#c9a84c",
+                    "text_color": "{{ settings.color_palette.color1 }}",
+                    "sale_price_color": "#C9A84C",
+                    "compare_price_color": "",
                     "padding-block-start": 4,
                     "padding-block-end": 0,
                     "padding-inline-start": 0,
