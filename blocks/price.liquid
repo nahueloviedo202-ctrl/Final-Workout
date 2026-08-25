@@ -117,11 +117,13 @@
     color: var(--compare-price-color, rgb(var(--color-rgb, var(--color-foreground-rgb)) / var(--opacity-subdued-text)));
   }
 
-  /* Same `!important` rationale as snippets/text.liquid: type presets and `.custom-font-size`
-     both set font-size with deliberately inflated specificity. Only matches when
+  /* Same `!important` + `> *` rationale as snippets/text.liquid: type presets and
+     `.custom-font-size` set font-size on the *child* of the text-block element (e.g.
+     `.text-block.h1 > *`), with deliberately inflated specificity. Only matches when
      `.text-block--mobile-size` is added, which only happens when "Size (mobile)" is set. */
   @media screen and (max-width: 749px) {
-    product-price.text-block--mobile-size {
+    product-price.text-block--mobile-size,
+    product-price.text-block--mobile-size > * {
       font-size: var(--text-mobile-font-size) !important;
     }
   }

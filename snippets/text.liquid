@@ -152,10 +152,14 @@
   /* `!important` is required here: type presets (.h1-.h6) and `.custom-font-size` both set
      their own font-size with deliberately inflated specificity (the theme's own anti-override
      guard), so nothing short of `!important` reliably wins regardless of preset or load order.
-     This rule only ever matches `.text-block--mobile-size`, a class added only when the
-     "Font size (mobile)" setting is set — so it's a no-op everywhere else. */
+     The `> *` variant is required too: base.css sets the preset font-size on the *child* of
+     `.text-block.{preset}` (e.g. `.text-block.h1 > *`), not on the text-block element itself,
+     so the actual rendered <p>/<h1>/etc gets its own explicit font-size that would otherwise
+     ignore whatever we set on the parent. This rule only ever matches `.text-block--mobile-size`,
+     a class added only when the "Font size (mobile)" setting is set — so it's a no-op elsewhere. */
   @media screen and (max-width: 749px) {
-    .text-block--mobile-size {
+    .text-block--mobile-size,
+    .text-block--mobile-size > * {
       font-size: var(--text-mobile-font-size) !important;
     }
   }

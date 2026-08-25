@@ -49,10 +49,12 @@
 {%- endunless -%}
 
 {% stylesheet %}
-  /* `!important` needed to beat `.custom-font-size` (the shared custom-typography rule)
+  /* `!important` + `> *` needed to beat `.custom-font-size, .custom-font-size > *` (the shared
+     custom-typography rule, which sets font-size on the child, not the element itself)
      regardless of source order. Only matches when "Size (mobile)" is set. */
   @media screen and (max-width: 749px) {
-    .announcement--mobile-size {
+    .announcement--mobile-size,
+    .announcement--mobile-size > * {
       font-size: var(--announcement-mobile-font-size) !important;
     }
   }
